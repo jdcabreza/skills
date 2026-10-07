@@ -39,12 +39,13 @@ disable-model-invocation: true
 
 1. <Commands and inputs he or the repo supplied.>
 2. <The result that means this way passed.>
-3. Show that result in the reply.
+3. Show the output you just ran in the reply. That is the request and the response, the log, or the command output.
 
 ## Don't
 
 - Invent a command, a path, a credential, or an expected result.
 - Claim this check passed without the output you just ran.
+- Write an HTML file, page, or report.
 
 ## Not this
 
@@ -74,6 +75,7 @@ Verify this repo still works by running each specific check. Run every check, in
 ## Don't
 
 - Run one check and skip the rest.
+- Add an HTML file, page, or report.
 
 ## Not this
 
@@ -97,6 +99,6 @@ The bracket text is for you. The files you write contain his commands and his na
 
 ## Example
 
-The user says they verify this shop by calling the health endpoint and by running checkout in the browser.
+The user says they verify this shop by calling the health endpoint and by posting a checkout.
 
-Write `verify-health` and `verify-checkout`. Each one has the commands and the result he expects. Write `verify-shop`. It reads both skills and runs both. A model calls `verify-shop`.
+Write `verify-health` and `verify-checkout`. Health shows the command output. Checkout shows the request and the response. Neither writes HTML. Write `verify-shop`. It reads both skills and runs both. A model calls `verify-shop`.

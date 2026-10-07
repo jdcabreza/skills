@@ -93,13 +93,15 @@ Fill this repo's pull request template.
 
 1. Read the template path in `AGENTS.md`. Read that file.
 2. Fill the template from the brief, the units, and the verification output already in the thread.
-3. Leave a section blank when the thread does not have that fact. Name the blank section in the reply.
+3. Leave a section blank when the thread does not have that fact. Name the blank section in one sentence.
+4. Return the filled template as one fenced markdown block the user can copy into the merge request. The block is the description.
 
 ## Don't
 
 - Invent a section the template does not have.
 - Invent a result the verification did not produce.
 - Copy the plan in full when the template asks for a summary.
+- Surround the block with a restatement of the description.
 
 ## Not this
 

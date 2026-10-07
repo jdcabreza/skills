@@ -32,19 +32,19 @@ Use `/nmode` when writing code, choosing an approach, or brainstorming. At the s
 
 Open one workflow skill for the stage you are in.
 
-A change that is already one sentence and one check stays in Agent mode.
+A change that is already one sentence and one check stays in Agent mode. The agent does not write a plan for it.
 
-A larger change goes to Plan mode. `plan` adds a brief, a blast radius, and units to the plan Cursor is writing. You edit that plan. The agent builds when you say to build.
+A change with a significant blast radius goes to Plan mode. The agent switches. You do not pick the mode. `plan` adds a brief, a blast radius, the principles it followed, and units to the plan file. As soon as that file exists, the agent runs grill and writes that feedback into the plan. You edit the plan. The agent builds when you say to build.
 
 A bug with an unknown cause follows Root Cause. Reproduce it, then trace it, before changing code. A second failure at the same check follows Assumptions.
 
 A new interaction with no pattern in the repo follows Design Options. The agent shows two or three ideas and writes no code until you pick one.
 
-When a unit finishes, Prove It runs the checks that unit can affect and shows the path with a request, a response, a log, or a screenshot. The last unit runs every check the overarching verification skill names. If the project has no verification skill, Prove It reads `create-verification`. If a change makes a verification skill wrong and the project has no maintenance skill, Prove It reads `create-verification-maintenance`.
+When a unit finishes, Prove It runs the checks that unit can affect and pastes the path's request, response, log, or command output. It does not write an HTML file to show the result. The last unit runs every check the overarching verification skill names. If the project has no verification skill, Prove It reads `create-verification`. If a change makes a verification skill wrong and the project has no maintenance skill, Prove It reads `create-verification-maintenance`.
 
-When the work is ready for a pull request, `nmode` reads `.cursor/skills/write-pr-description/SKILL.md` in the project. That skill fills the template from the brief, the units, and the verification output. If the file is missing, `nmode` stops and says this repo has no pull request skill.
+When the work is ready for a pull request, `nmode` reads `.cursor/skills/write-pr-description/SKILL.md` in the project. That skill fills the template from the brief, the units, and the verification output, and returns it as one fenced markdown block you can copy into the merge request. If the file is missing, `nmode` stops and says this repo has no pull request skill.
 
-Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for holes. The agent judges the findings. The code stays as you left it. Grill can revise a plan or a proposal in the reply.
+Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for holes. The agent judges the findings. The code stays as you left it. When the target is a plan file, the feedback is written into the plan. A proposal with no file is revised in the reply. `plan` also runs grill as soon as it writes a plan.
 
 `unslop` applies to any writing. It cuts the listed AI patterns and keeps the meaning.
 
@@ -75,13 +75,13 @@ Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for ho
 
 Routes coding and brainstorming through the principle skills. Use it when writing code, choosing an approach, brainstorming, or with `/nmode`.
 
-It is the mode for decide and implement. The result is a routed reply. It reads `plan`, `how`, `why`, or the project's pull request skill only at that stage.
+It is the mode for decide and implement. The result is a routed reply. It switches to Plan mode when the blast radius is significant. You do not pick the mode. It reads `plan`, `how`, `why`, or the project's pull request skill only at that stage. A reply that followed a principle names that principle on the sentence it supports.
 
 ### plan
 
-Adds a brief, a blast radius, and verifiable units to the Cursor plan. Use it when Plan mode is writing or revising a plan, or when `nmode` is about to plan a change.
+Adds a brief, a blast radius, the principles used, and verifiable units to the Cursor plan, then runs grill and writes that feedback into the plan. Use it when Plan mode is writing or revising a plan, or when `nmode` is about to plan a change.
 
-It reads `AGENTS.md` and `GLOSSARY.md` when the repo has them. It stops when the plan is in front of you. A change that is already one sentence and one check stays in Agent mode.
+It reads `AGENTS.md` and `GLOSSARY.md` when the repo has them. The plan is the file Plan mode writes. It stops when that file is in front of you, after grill has added the feedback. A change that is already one sentence and one check stays in Agent mode.
 
 ### how
 
@@ -99,7 +99,7 @@ It reads `CONTEXT.md` and the source-control or docs tools that exist. A questio
 
 Spawns reviewers to interrogate code, a plan, or a proposal, then judges the findings. Use it with `/grill`, or when you ask to pressure-test one of those.
 
-It reads `grill reviewers` from `~/.cursor/rules/nmode-models.mdc`. If that file is missing, it uses the two default models named in the skill. It leaves the code unchanged.
+It reads `grill reviewers` from `~/.cursor/rules/nmode-models.mdc`. If that file is missing, it uses the two default models named in the skill. It leaves the code unchanged. When the target is a plan file, it writes the feedback into that file.
 
 ### huh
 
@@ -163,7 +163,7 @@ They apply while you decide and while you implement. You add a new principle as 
 
 **Encode Lessons.** `nmode/principles/core/encode-lessons`. Turns a repeated line or instruction into a lint, a check, or a script. Use it when the agent is about to write the same line, comment, or instruction again, or when more text would restate a rule a check can enforce.
 
-**Prove It.** `nmode/principles/core/prove-it`. When a unit finishes, runs the checks that unit can affect, and proves the feature with the request, the response, a log, or a screenshot. The last unit runs every check. Use it when finishing a unit, before claiming a change works, or when verifying behavior. If the project has no verification skill, it reads `create-verification`. If a change makes a verification skill wrong and the project has no maintenance skill, it reads `create-verification-maintenance`.
+**Prove It.** `nmode/principles/core/prove-it`. When a unit finishes, runs the checks that unit can affect, and proves the feature by pasting the request, the response, the log, or the command output. It does not write an HTML file to show the result. The last unit runs every check. Use it when finishing a unit, before claiming a change works, or when verifying behavior. If the project has no verification skill, it reads `create-verification`. If a change makes a verification skill wrong and the project has no maintenance skill, it reads `create-verification-maintenance`.
 
 ### Engineering
 

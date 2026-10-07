@@ -47,6 +47,7 @@ description: Updates this repo's verification skills when a change makes them wr
 - Edit a check the change did not touch.
 - Invent a command, a path, a credential, or an expected result.
 - Write a secret value. Name the env var.
+- Write an HTML file, page, or report to show a check's result.
 
 ## Not this
 
