@@ -1,25 +1,25 @@
 ---
 name: init-agent-repo
-description: Initializes or updates a repository for agent work. Distills from existing AGENTS.md and related files when present, asks whether context or business logic changed, and brings files up to date with this skill. Writes AGENTS.md with a fixed anti-slop Practices block, a CLAUDE.md symlink, GLOSSARY.md, CONTEXT.md, README troubleshooting from gotchas he names, the template he names, .cursor/skills/write-pr-description/SKILL.md when he names a template, and a gitignored agent_space directory. Use when the user asks to initialize or update a repo for agents, set up AGENTS.md, add a glossary for agents, or invokes /init-agent-repo.
+description: Initializes or updates a repository for agent work. Distills from existing AGENTS.md and related files when present, asks whether context or business logic changed and whether entry points moved, and brings files up to date with this skill. Infers a short Feature map and entry points list from the codebase for the user to confirm. Writes AGENTS.md with a fixed anti-slop Practices block, optional Feature map and entry points, a CLAUDE.md symlink, GLOSSARY.md, CONTEXT.md, README troubleshooting from gotchas he names, the template he names, .cursor/skills/write-pr-description/SKILL.md when he names a template, and a gitignored agent_space directory. Use when the user asks to initialize or update a repo for agents, set up AGENTS.md, add a glossary for agents, or invokes /init-agent-repo.
 disable-model-invocation: true
 ---
 
 # Init Agent Repo
 
-Ask what this repository is, or refresh it from existing agent files. Scrutinize the reply. Distill into facts, conventions, practices, vocabulary, and README troubleshooting. Write those into the files below.
+Ask what this repository is, or refresh it from existing agent files. Scrutinize the reply. Distill into facts, entry points, conventions, practices, vocabulary, and README troubleshooting. Write those into the files below.
 
-`agent_space/` is a scratch space for AI agents to dump any files in. Agents can use this as they wish. It is gitignored. Facts live in `AGENTS.md` and `GLOSSARY.md`. Decisions live in `CONTEXT.md`. Gotchas and common issues live in README troubleshooting. Technical detail does not live in README. The pull request template lives at the path he names. When he names one, the skill that fills it is `.cursor/skills/write-pr-description/SKILL.md`. That skill is in the repo, so teammates use it.
+`agent_space/` is a scratch space for AI agents to dump any files in. Agents can use this as they wish. It is gitignored. Facts and entry points live in `AGENTS.md`. Glossary terms live in `GLOSSARY.md`. Decisions live in `CONTEXT.md`. Gotchas and common issues live in README troubleshooting. Technical detail does not live in README. The pull request template lives at the path he names. When he names one, the skill that fills it is `.cursor/skills/write-pr-description/SKILL.md`. That skill is in the repo, so teammates use it.
 
 Running this skill again updates the repo to match the current skill. It does not require a wipe.
 
 ## Do
 
-1. Read the repo. README, existing `AGENTS.md`, `GLOSSARY.md`, `CONTEXT.md`, `.cursor/skills/write-pr-description/SKILL.md`, and `.gitignore`. Treat README as unverified overview only. Do not take architecture, API, or convention claims from it as distill facts. Prefer existing agent files, the code, and the user. If a pull request template is already in the repo, note its path.
-2. When `AGENTS.md`, `GLOSSARY.md`, or `CONTEXT.md` already exists, this run is an update. Distill the current facts, conventions, project practices, terms, decisions, and template path from those files. Tell the user you will bring the files up to date with this skill. Ask whether any context or business logic has changed. Ask for gotchas or common issues to put in README troubleshooting. One ask, in the reply. Wait for the answer.
-3. When those files do not exist, ask the user for project context directly. In the same ask, ask for gotchas or common issues to put in README troubleshooting. Ask only for what the repo does not already hold from confirmed sources. Do not treat README as a confirmed source. One ask, in the reply.
-4. Scrutinize the reply. A hole is a gap that would leave a fact, a convention, a practice, a term, a template path, a decision, or a troubleshooting gotcha too vague for an agent to follow without asking again. A decision is a choice and the tradeoff. Present the holes in one reply. Skip a hole that does not change the files. When there are holes, wait for the user to clarify. When there are none, distill.
-5. Distill. Show the facts, the conventions, the fixed Practices block below, any project practices, the glossary terms, the template path, the decisions, and the README troubleshooting gotchas. On an update, start from what the existing agent files held, then apply what he said changed. The fixed Practices block is not optional. Ask the user to confirm. Write nothing before that confirmation. If he asks to drop the fixed block, push back once. Then obey.
-6. Write `AGENTS.md` from the confirmed distill. Include the fixed Practices block below, same words. Append any project practices he confirmed after that block. Include the scratch space section below, same words.
+1. Read the repo. README, existing `AGENTS.md`, `GLOSSARY.md`, `CONTEXT.md`, `.cursor/skills/write-pr-description/SKILL.md`, and `.gitignore`. Treat README as unverified overview only. Do not take architecture, API, or convention claims from it as distill facts. Prefer existing agent files, the code, and the user. If a pull request template is already in the repo, note its path. Infer a short Feature map and entry points list from the codebase layout: main areas and their paths. This is a one-time pass. Prefer top-level packages and directories that hold product code. Skip noise such as `node_modules`, build output, and vendor trees. Do not ask him to invent that list.
+2. When `AGENTS.md`, `GLOSSARY.md`, or `CONTEXT.md` already exists, this run is an update. Distill the current facts, entry points from `## Feature map and entry points`, conventions, project practices, terms, decisions, and template path from those files. Tell the user you will bring the files up to date with this skill. Ask whether any context or business logic has changed. Ask whether any entry points moved. Ask for gotchas or common issues to put in README troubleshooting. One ask, in the reply. Wait for the answer.
+3. When those files do not exist, ask the user for project context directly. In the same ask, ask for gotchas or common issues to put in README troubleshooting. Ask only for what the repo does not already hold from confirmed sources. Do not treat README as a confirmed source. Do not ask him to supply the entry point list. One ask, in the reply.
+4. Scrutinize the reply. A hole is a gap that would leave a fact, an entry point area or path, a convention, a practice, a term, a template path, a decision, or a troubleshooting gotcha too vague for an agent to follow without asking again. A decision is a choice and the tradeoff. Present the holes in one reply. Skip a hole that does not change the files. When there are holes, wait for the user to clarify. When there are none, distill.
+5. Distill. Show the facts, the entry points, the conventions, the fixed Practices block below, any project practices, the glossary terms, the template path, the decisions, and the README troubleshooting gotchas. Entry points in the distill are the list inferred in step 1, or the existing section on an update. When he said entry points moved, or the section is missing, re-infer from the codebase and show that list. Mark the entry points as proposed from the code. He confirms or corrects them. On an update, start from what the existing agent files held, then apply what he said changed. The fixed Practices block is not optional. Ask the user to confirm. Write nothing before that confirmation. If he asks to drop the fixed block, push back once. Then obey.
+6. Write `AGENTS.md` from the confirmed distill. Include the fixed Practices block below, same words. Append any project practices he confirmed after that block. Include the Feature map and entry points section below when he confirmed any. Include the scratch space section below, same words.
 7. From the repo root, symlink `CLAUDE.md` to `AGENTS.md`: `ln -s AGENTS.md CLAUDE.md`. Replace a broken or wrong `CLAUDE.md` link when needed.
 8. Write `GLOSSARY.md` from the confirmed terms. One term, then the meaning the user gave.
 9. Write `CONTEXT.md`. A decision he confirmed is the choice, then the tradeoff. When he confirmed none, write the heading and no decisions.
@@ -37,6 +37,12 @@ Running this skill again updates the repo to match the current skill. It does no
 ## Project
 
 <Distilled facts. What this repo is, who it is for, and what an agent must not break. Only what the user confirmed.>
+
+## Feature map and entry points
+
+Agents should adjust this based on code changes.
+
+<Area>: <path he confirmed.>
 
 ## Conventions
 
@@ -64,7 +70,7 @@ Running this skill again updates the repo to match the current skill. It does no
 `agent_space/` is a scratch space for AI agents to dump any files in. Agents can use this as they wish. It is gitignored. Create `agent_space/` if it is missing. Do not commit anything inside it.
 ```
 
-Always write the fixed Practices list. Do not omit the Practices section.
+Always write the fixed Practices list. Do not omit the Practices section. Omit Feature map and entry points when he confirmed none. Each entry point row is a main area and a path, not a file inventory. Propose that list from the codebase. Write it only after he confirms.
 
 ### README
 
@@ -154,7 +160,10 @@ Fill this repo's pull request template.
 
 ## Don't
 
-- Invent a fact, a convention, a practice, a term, or a gotcha the user did not confirm.
+- Invent a fact, an entry point, a convention, a practice, a term, or a gotcha the user did not confirm.
+- Write entry points before he confirms them. Proposing them from the codebase in the distill is required. Writing them without confirmation is not.
+- Ask him to invent the entry point list himself.
+- Put entry points in `CONTEXT.md`. Decisions only live there.
 - Take architecture, API, or convention claims from README as distill facts.
 - Put technical detail in README outside Troubleshooting.
 - Drop the fixed Practices block unless the user insisted after one push-back.
@@ -168,4 +177,4 @@ Fill this repo's pull request template.
 
 - You presented a hole and the user has not clarified it. Wait. Distill nothing yet.
 - The user has not confirmed the distill. Ask. Write nothing yet.
-- Agent files already exist. This is an update. Distill from them, ask what changed and for gotchas, then confirm before writing.
+- Agent files already exist. This is an update. Distill from them, ask what changed, whether entry points moved, and for gotchas, then confirm before writing.

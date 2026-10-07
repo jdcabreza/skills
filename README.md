@@ -12,7 +12,7 @@ Set a repo up once. After that, `nmode` stays on while you choose an approach or
 
 ### Set up
 
-1. Run `/init-agent-repo` in the project. It asks for context and gotchas, names what is missing, and waits. After you confirm the distill, it writes `AGENTS.md`, a `CLAUDE.md` symlink, `GLOSSARY.md`, `CONTEXT.md`, README troubleshooting, and a gitignored `agent_space/` directory. If you name a pull request template, it writes that template and `.cursor/skills/write-pr-description/SKILL.md` in the project. Run it again to bring those files up to date with the skill: it distills from the existing agent files and asks whether context or business logic changed.
+1. Run `/init-agent-repo` in the project. It asks for context and gotchas, infers a short Feature map and entry points list from the codebase, names what is missing, and waits. After you confirm the distill, it writes `AGENTS.md` (including Feature map and entry points when you confirmed any), a `CLAUDE.md` symlink, `GLOSSARY.md`, `CONTEXT.md`, README troubleshooting, and a gitignored `agent_space/` directory. If you name a pull request template, it writes that template and `.cursor/skills/write-pr-description/SKILL.md` in the project. Run it again to bring those files up to date with the skill: it distills from the existing agent files and asks whether context or business logic changed and whether any entry points moved.
 
 2. Run `/setup-models` on this machine. It lists the Task models it can use. After you accept the list, it writes `~/.cursor/rules/nmode-models.mdc` with `alwaysApply: true`. Grill reads the `grill reviewers` line from that file. Cursor applies the rule to new sessions.
 
@@ -124,9 +124,9 @@ The rule ids in the skill are stable. Other skills can cite them.
 
 ### init-agent-repo
 
-Initializes or updates a repository for agent work. It asks for project context and gotchas, scrutinizes the reply for holes, and distills after you clarify. Use it with `/init-agent-repo`, or when you ask to set up or refresh `AGENTS.md` or a glossary for agents.
+Initializes or updates a repository for agent work. It asks for project context and gotchas, infers a short Feature map and entry points list from the codebase for you to confirm, scrutinizes the reply for holes, and distills after you clarify. Use it with `/init-agent-repo`, or when you ask to set up or refresh `AGENTS.md` or a glossary for agents.
 
-It writes the repo files listed in the setup stage above. A second run updates from the existing agent files.
+It writes the repo files listed in the setup stage above. Confirmed entry points land in `AGENTS.md` under Feature map and entry points. A second run updates from the existing agent files and asks whether those paths moved.
 
 ### setup-models
 
