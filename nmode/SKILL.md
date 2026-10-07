@@ -32,10 +32,11 @@ Read the skill for the stage you are in. Do not read the rest at the start.
 
 The user does not pick the mode. A change that is already one sentence and one check stays in Agent mode. Do not write a plan.
 
-1. When the change has a significant blast radius, or Plan mode is writing or revising a plan, or the user asks for a plan, switch to Plan mode if you are not already there. Significant means more than one behavior, more than one caller who would notice, or a decision you would otherwise write out as a plan. Do not write that plan in the chat. If the switch is declined, stop. Read `../plan/SKILL.md` and follow it.
-2. When the user asks how something works end to end, read `../how/SKILL.md` and follow it.
-3. When the user asks why a decision was made, read `../why/SKILL.md` and follow it.
-4. When the work is ready for a pull request, read `.cursor/skills/write-pr-description/SKILL.md` in the repo and follow it. If that file is missing, stop. Say this repo has no pull request skill.
+1. When the user asks for proposals, paths, or hypotheses, and they have not picked one, read `../propose/SKILL.md` and follow it. Do not write a plan and do not write code in that step.
+2. When the change has a significant blast radius, or Plan mode is writing or revising a plan, or the user asks for a plan, switch to Plan mode if you are not already there. Significant means more than one behavior, more than one caller who would notice, or a decision you would otherwise write out as a plan. Do not write that plan in the chat. If the switch is declined, stop. Read `../plan/SKILL.md` and follow it.
+3. When the user asks how something works end to end, read `../how/SKILL.md` and follow it.
+4. When the user asks why a decision was made, read `../why/SKILL.md` and follow it.
+5. When the work is ready for a pull request, read `.cursor/skills/write-pr-description/SKILL.md` in the repo and follow it. If that file is missing, stop. Say this repo has no pull request skill.
 
 ## Conflict
 

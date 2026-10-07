@@ -30,6 +30,7 @@ Precedent means this repo, or a pattern the user already uses, already does this
 
 - A bugfix, a change that follows a pattern already in the repo, or an approach the user already picked. Build that.
 - A small decision inside a design the user already chose, such as a name or a field. Decide and move.
+- The user asked for proposals, paths, or hypotheses. Read `../../../../propose/SKILL.md` and follow it. This principle does not apply.
 
 ## Example
 

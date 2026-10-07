@@ -40,6 +40,8 @@ A bug with an unknown cause follows Root Cause. Reproduce it, then trace it, bef
 
 A new interaction with no pattern in the repo follows Design Options. The agent shows two or three ideas and writes no code until you pick one.
 
+When you want the paths before any code, run `/propose`. Two explorers each generate hypotheses with pros, cons, and proof. The main agent runs an intermediary pass between them, then returns the consolidated paths. It does not write a prototype.
+
 When a unit finishes, Prove It runs the checks that unit can affect and pastes the path's request, response, log, or command output. It does not write an HTML file to show the result. The last unit runs every check the overarching verification skill names. If the project has no verification skill, Prove It reads `create-verification`. If a change makes a verification skill wrong and the project has no maintenance skill, Prove It reads `create-verification-maintenance`.
 
 When the work is ready for a pull request, `nmode` reads `.cursor/skills/write-pr-description/SKILL.md` in the project. That skill fills the template from the brief, the units, and the verification output, and returns it as one fenced markdown block you can copy into the merge request. If the file is missing, `nmode` stops and says this repo has no pull request skill.
@@ -60,6 +62,7 @@ Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for ho
 | `why` | Why a decision was made | Understand |
 | `huh` | The last reply was unclear | Understand |
 | `nmode` | Write code, choose an approach, or brainstorm | Decide and implement |
+| `propose` | See two or three paths for an ask before any code | Decide and implement |
 | Principles under `nmode` | The task matches that principle's description | Decide and implement |
 | `plan` | Plan mode is writing or revising a plan | Plan |
 | Prove It | A unit is finished, or you are about to claim the change works | Verify |
@@ -75,7 +78,13 @@ Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for ho
 
 Routes coding and brainstorming through the principle skills. Use it when writing code, choosing an approach, brainstorming, or with `/nmode`.
 
-It is the mode for decide and implement. The result is a routed reply. It switches to Plan mode when the blast radius is significant. You do not pick the mode. It reads `plan`, `how`, `why`, or the project's pull request skill only at that stage. A reply that followed a principle names that principle on the sentence it supports.
+It is the mode for decide and implement. The result is a routed reply. It switches to Plan mode when the blast radius is significant. You do not pick the mode. It reads `propose`, `plan`, `how`, `why`, or the project's pull request skill only at that stage. A reply that followed a principle names that principle on the sentence it supports.
+
+### propose
+
+Spawns two explorers that each generate proposals for an ask, then acts as intermediary between them and returns the consolidated paths. Use it with `/propose`, or when you ask for proposals, paths, or hypotheses before any code.
+
+A proposal is a hypothesis with pros, cons, and proof. Proof is a constraint, a behavior, or a path this product already has. The explorers use the first two models from `grill reviewers`. The main agent consolidates. It does not write code. It does not call `grill`.
 
 ### plan
 
