@@ -32,4 +32,4 @@ Never block on the human. If you want to ask "should I do X?", check if it is re
 
 Agent default: "Should I name the field `status` or `state`?"
 
-Do this: you use `status` and show the result. He can rename it.
+Do this: you use `status` and show the result. The user can rename it.

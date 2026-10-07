@@ -84,6 +84,6 @@ When a principle shaped a decision, an implementation detail, or a judgement, pu
 
 The heading is evidence for that sentence. It is not a section title, and it does not start a block. It is required on that sentence. Do not open a block per principle. Do not bunch the headings at the end. Two principles that support the same sentence both go before it.
 
-Name only a principle whose body you followed. If none matched, leave the headings out. A reply that followed a principle and does not name it is unfinished. Do this in ordinary chat. A plan lists the same names. That list is in `plan`.
+Name only a principle whose body you followed. If none matched, leave the headings out. A reply that followed a principle and does not name it is unfinished. Do this in ordinary chat. A plan uses the same headings on the sentences they support. That rule is in `plan`.
 
 [**Intent**] The page only needs to stay fast when the same order is opened again. [**Be Lazy**] A cache class is more than that needs.

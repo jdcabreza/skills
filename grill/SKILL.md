@@ -20,7 +20,7 @@ Pressure-test code, a plan, or a proposal until the decision holds. The reviewer
 4. Synthesize. A finding from two or more reviewers is consensus. Keep a finding from one reviewer. Merge two descriptions of the same issue. Note a disagreement when one reviewer flags what another denies.
 5. Judge each finding. Put it in act on, consider, noted, or dismissed. Name who raised it. Give one line why.
 6. State the decision. Leave the code as it is. Ask a question only when the answer changes the decision.
-   - When the target is a plan file, add a Feedback section to that file with this verdict. Revise the plan where the decision says it broke. If that revision changes which principles the plan rests on, update the Principles section. The reply states the decision. Do not paste the plan.
+   - When the target is a plan file, add a Feedback section to that file with this verdict. Revise the plan where the decision says it broke. If that revision changes which principles shaped a sentence, update those bracket headings in place. Do not add a Principles section. The reply states the decision. Do not paste the plan.
    - When the target is a proposal with no file, revise it in the reply where it broke.
 
 ### Rubric

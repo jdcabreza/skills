@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Adds a brief, a blast radius, the principles used, and verifiable units to the Cursor plan, then runs grill and writes that feedback into the plan. Use when Plan mode is writing or revising a plan, or when nmode is about to plan a change.
+description: Adds a brief, a blast radius, and verifiable units to the Cursor plan, marks principles inline where they shaped a decision, then runs grill and writes that feedback into the plan. Use when Plan mode is writing or revising a plan, or when nmode is about to plan a change.
 ---
 
 # Plan
@@ -14,8 +14,8 @@ Cursor Plan mode writes the plan. This skill adds the sections that mode does no
 3. Add these sections to the plan Cursor is writing. Write them in the voice `nmode` Say it requires.
    - Brief. Why this change, who it is for, the impact, and what must not break. Use `AGENTS.md` and what the user just said. Leave a line blank when neither has it.
    - Blast radius. The behaviors and callers this change touches, and who notices. Use the files Plan mode already found.
-   - Principles. Each nmode principle whose body changed this plan. The name, then the decision it produced. These are the same names as the bracket headings in chat. Omit a principle you did not follow.
    - Units. One sentence per unit. The sentence says what changes, and which check shows it works. Follow `verifiable-units`.
+   When a principle shaped a decision in the plan, put a bold bracket heading immediately before that sentence. Same form as chat. Do not add a Principles section. Omit a principle you did not follow.
 4. As soon as that plan file exists, read `../grill/SKILL.md` and follow it on this plan. Grill writes the feedback into the plan. Do this before you stop.
 5. Stop when that plan is in front of the user. The user edits it. Build when the user says to build.
 
@@ -26,6 +26,7 @@ Cursor Plan mode writes the plan. This skill adds the sections that mode does no
 - Paste the plan into the chat.
 - Stop before grill has written the feedback into the plan.
 - Start the edits in this step.
+- Add a Principles section.
 
 ## Not this
 

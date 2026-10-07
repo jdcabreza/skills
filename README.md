@@ -34,7 +34,7 @@ Open one workflow skill for the stage you are in.
 
 A change that is already one sentence and one check stays in Agent mode. The agent does not write a plan for it.
 
-A change with a significant blast radius goes to Plan mode. The agent switches. You do not pick the mode. `plan` adds a brief, a blast radius, the principles it followed, and units to the plan file. As soon as that file exists, the agent runs grill and writes that feedback into the plan. You edit the plan. The agent builds when you say to build.
+A change with a significant blast radius goes to Plan mode. The agent switches. You do not pick the mode. `plan` adds a brief, a blast radius, and units to the plan file, and marks principles inline where they shaped a decision. As soon as that file exists, the agent runs grill and writes that feedback into the plan. You edit the plan. The agent builds when you say to build.
 
 A bug with an unknown cause follows Root Cause. Reproduce it, then trace it, before changing code. A second failure at the same check follows Assumptions.
 
@@ -88,7 +88,7 @@ A proposal is a hypothesis with pros, cons, and proof. Proof is a constraint, a 
 
 ### plan
 
-Adds a brief, a blast radius, the principles used, and verifiable units to the Cursor plan, then runs grill and writes that feedback into the plan. Use it when Plan mode is writing or revising a plan, or when `nmode` is about to plan a change.
+Adds a brief, a blast radius, and verifiable units to the Cursor plan, marks principles inline where they shaped a decision, then runs grill and writes that feedback into the plan. Use it when Plan mode is writing or revising a plan, or when `nmode` is about to plan a change.
 
 It reads `AGENTS.md` and `GLOSSARY.md` when the repo has them. The plan is the file Plan mode writes. It stops when that file is in front of you, after grill has added the feedback. A change that is already one sentence and one check stays in Agent mode.
 

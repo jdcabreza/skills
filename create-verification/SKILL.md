@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Create Verification
 
-Ask the user how this repository is verified. Write one skill a model can call. That skill runs one specific skill for each way he names.
+Ask the user how this repository is verified. Write one skill a model can call. That skill runs one specific skill for each way the user names.
 
 A repo can have more than one way to verify it works.. The overarching skill is the call. Each specific skill is one check.
 
@@ -14,13 +14,13 @@ A repo can have more than one way to verify it works.. The overarching skill is 
 
 1. Read how this repo already runs and checks itself. README, start scripts, tests, and existing examples. Note only commands, paths, and checks those files state.
 2. Ask the user for the context the repo does not hold: what this repo is, and what a correct change has to prove. Use the AskQuestion tool when it is available.
-3. Ask how he would verify this repository. Ask for every way. Show the commands you found and let him keep, drop, or add ways. Do not write a skill before he answers.
+3. Ask how the user would verify this repository. Ask for every way. Show the commands you found and let the user keep, drop, or add ways. Do not write a skill before the user answers.
 4. If an overarching verification skill already exists under `.cursor/skills/`, stop. Tell the user to follow this repo's verification maintenance skill. If that skill does not exist, tell the user to run `/create-verification-maintenance`. If the only verification file is `.cursor/skills/verify/SKILL.md` and it does not run specific skills, ask the user whether to replace it. That file is the old shape.
-5. Write one specific skill per way he confirmed, at `.cursor/skills/<name>/SKILL.md`. Name it for that way, in his words. Lowercase, hyphens, no abbreviation you invent.
-6. Write one overarching skill at `.cursor/skills/<name>/SKILL.md`. Name it for this repo, in his words. It reads and follows every specific skill, in the order he cares about, and stops when one fails. When a unit finishes, it runs every check, including a check that unit did not touch. That run is how an agent shows the repository still works.
+5. Write one specific skill per way the user confirmed, at `.cursor/skills/<name>/SKILL.md`. Name it for that way, in the user's words. Lowercase, hyphens, no abbreviation you invent.
+6. Write one overarching skill at `.cursor/skills/<name>/SKILL.md`. Name it for this repo, in the user's words. It reads and follows every specific skill, in the order the user cares about, and stops when one fails. When a unit finishes, it runs every check, including a check that unit did not touch. That run is how an agent shows the repository still works.
 7. Write every skill in the shape below. A command, path, credential, or expected result comes from the repo or from the user. Name an env var. Never write the secret value.
 8. Omit `disable-model-invocation` on the overarching skill. Set `disable-model-invocation: true` on each specific skill. The overarching skill reads those files.
-9. Show him the overarching name, each specific name, and the check it runs. Ask him to confirm any command or check that is still your guess. Then tell him to run `/create-verification-maintenance`.
+9. Show the user the overarching name, each specific name, and the check it runs. Ask the user to confirm any command or check that is still your guess. Then tell the user to run `/create-verification-maintenance`.
 
 ### Specific skill
 
@@ -37,7 +37,7 @@ disable-model-invocation: true
 
 ## Do
 
-1. <Commands and inputs he or the repo supplied.>
+1. <Commands and inputs the user or the repo supplied.>
 2. <The result that means this way passed.>
 3. Show the output you just ran in the reply. That is the request and the response, the log, or the command output.
 
@@ -82,11 +82,11 @@ Verify this repo still works by running each specific check. Run every check, in
 - A docs-only change. Say that there is nothing to run.
 ```
 
-The bracket text is for you. The files you write contain his commands and his names.
+The bracket text is for you. The files you write contain the user's commands and names.
 
 ## Don't
 
-- Invent a way he did not name.
+- Invent a way the user did not name.
 - Limit the checks to a backend, an HTTP call, or a test suite.
 - Fold the checks into the overarching skill and skip the specific skills.
 - Leave a placeholder, a sample port, or a made-up expected body.
@@ -94,8 +94,8 @@ The bracket text is for you. The files you write contain his commands and his na
 
 ## Not this
 
-- He wants to update verification skills that already exist. That update belongs to this repo's verification maintenance skill.
-- He has not answered how he would verify it. Ask. Write nothing yet.
+- The user wants to update verification skills that already exist. That update belongs to this repo's verification maintenance skill.
+- The user has not answered how they would verify it. Ask. Write nothing yet.
 
 ## Example
 
