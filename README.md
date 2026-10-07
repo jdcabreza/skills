@@ -12,7 +12,7 @@ Set a repo up once. After that, `nmode` stays on while you choose an approach or
 
 ### Set up
 
-1. Run `/init-agent-repo` in the project. It asks for context, names what is missing, and waits. After you confirm the distill, it writes `AGENTS.md`, a `CLAUDE.md` symlink, `GLOSSARY.md`, `CONTEXT.md`, and a gitignored `agent_space/` directory. If you name a pull request template, it writes that template and `.cursor/skills/write-pr-description/SKILL.md` in the project. If those files already exist, it stops until you say to replace them.
+1. Run `/init-agent-repo` in the project. It asks for context and gotchas, names what is missing, and waits. After you confirm the distill, it writes `AGENTS.md`, a `CLAUDE.md` symlink, `GLOSSARY.md`, `CONTEXT.md`, README troubleshooting, and a gitignored `agent_space/` directory. If you name a pull request template, it writes that template and `.cursor/skills/write-pr-description/SKILL.md` in the project. Run it again to bring those files up to date with the skill: it distills from the existing agent files and asks whether context or business logic changed.
 
 2. Run `/setup-models` on this machine. It lists the Task models it can use. After you accept the list, it writes `~/.cursor/rules/nmode-models.mdc` with `alwaysApply: true`. Grill reads the `grill reviewers` line from that file. Cursor applies the rule to new sessions.
 
@@ -54,7 +54,7 @@ Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for ho
 
 | Skill | When you use it | Stage |
 | --- | --- | --- |
-| `init-agent-repo` | Initialize a repo for agents, or add `AGENTS.md` and a glossary | Set up |
+| `init-agent-repo` | Initialize or update a repo for agents, or add `AGENTS.md` and a glossary | Set up |
 | `setup-models` | Configure models, or change the model budget | Set up |
 | `create-verification` | Set up how agents confirm this repo | Set up |
 | `create-verification-maintenance` | Keep those checks current after they exist | Set up |
@@ -124,9 +124,9 @@ The rule ids in the skill are stable. Other skills can cite them.
 
 ### init-agent-repo
 
-Initializes a repository for agent work. It asks for project context, scrutinizes the reply for holes, and distills after you clarify. Use it with `/init-agent-repo`, or when you ask to set up `AGENTS.md` or a glossary for agents.
+Initializes or updates a repository for agent work. It asks for project context and gotchas, scrutinizes the reply for holes, and distills after you clarify. Use it with `/init-agent-repo`, or when you ask to set up or refresh `AGENTS.md` or a glossary for agents.
 
-It writes the repo files listed in the setup stage above.
+It writes the repo files listed in the setup stage above. A second run updates from the existing agent files.
 
 ### setup-models
 

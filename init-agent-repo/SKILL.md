@@ -1,30 +1,33 @@
 ---
 name: init-agent-repo
-description: Initializes a repository for agent work. Asks the user for project context, scrutinizes the reply for holes, and distills after the user clarifies. Writes AGENTS.md, a CLAUDE.md symlink, GLOSSARY.md, CONTEXT.md, the template he names, .cursor/skills/write-pr-description/SKILL.md when he names a template, and a gitignored agent_space directory. Use when the user asks to initialize a repo for agents, set up AGENTS.md, add a glossary for agents, or invokes /init-agent-repo.
+description: Initializes or updates a repository for agent work. Distills from existing AGENTS.md and related files when present, asks whether context or business logic changed, and brings files up to date with this skill. Writes AGENTS.md with a fixed anti-slop Practices block, a CLAUDE.md symlink, GLOSSARY.md, CONTEXT.md, README troubleshooting from gotchas he names, the template he names, .cursor/skills/write-pr-description/SKILL.md when he names a template, and a gitignored agent_space directory. Use when the user asks to initialize or update a repo for agents, set up AGENTS.md, add a glossary for agents, or invokes /init-agent-repo.
 disable-model-invocation: true
 ---
 
 # Init Agent Repo
 
-Ask what this repository is. Scrutinize the reply. Distill the clarified reply into facts, conventions, practices, and vocabulary. Write those into the files below.
+Ask what this repository is, or refresh it from existing agent files. Scrutinize the reply. Distill into facts, conventions, practices, vocabulary, and README troubleshooting. Write those into the files below.
 
-`agent_space/` is a scratch space for AI agents to dump any files in. Agents can use this as they wish. It is gitignored. Facts live in `AGENTS.md` and `GLOSSARY.md`. Decisions live in `CONTEXT.md`. The pull request template lives at the path he names. When he names one, the skill that fills it is `.cursor/skills/write-pr-description/SKILL.md`. That skill is in the repo, so teammates use it.
+`agent_space/` is a scratch space for AI agents to dump any files in. Agents can use this as they wish. It is gitignored. Facts live in `AGENTS.md` and `GLOSSARY.md`. Decisions live in `CONTEXT.md`. Gotchas and common issues live in README troubleshooting. Technical detail does not live in README. The pull request template lives at the path he names. When he names one, the skill that fills it is `.cursor/skills/write-pr-description/SKILL.md`. That skill is in the repo, so teammates use it.
+
+Running this skill again updates the repo to match the current skill. It does not require a wipe.
 
 ## Do
 
-1. Read the repo. README, existing `AGENTS.md`, `GLOSSARY.md`, `CONTEXT.md`, and `.gitignore`. Note only what those files state. If a pull request template is already in the repo, note its path.
-2. If `AGENTS.md`, `CLAUDE.md`, `GLOSSARY.md`, `CONTEXT.md`, or `.cursor/skills/write-pr-description/SKILL.md` already exists, stop. Ask whether to replace it. Write nothing until the user answers.
-3. Ask the user for project context directly. One ask, in the reply. Ask only for what the repo does not already hold.
-4. Scrutinize the reply. A hole is a gap that would leave a fact, a convention, a practice, a term, a template path, or a decision too vague for an agent to follow without asking again. A decision is a choice and the tradeoff. Present the holes in one reply. Skip a hole that does not change the files. When there are holes, wait for the user to clarify. When there are none, distill.
-5. Distill. Show the facts, the conventions, the practices, the glossary terms, the template path, and the decisions. Ask the user to confirm. Write nothing before that confirmation.
-6. Write `AGENTS.md` from the confirmed distill. Include the scratch space section below, same words.
-7. From the repo root, symlink `CLAUDE.md` to `AGENTS.md`: `ln -s AGENTS.md CLAUDE.md`.
+1. Read the repo. README, existing `AGENTS.md`, `GLOSSARY.md`, `CONTEXT.md`, `.cursor/skills/write-pr-description/SKILL.md`, and `.gitignore`. Treat README as unverified overview only. Do not take architecture, API, or convention claims from it as distill facts. Prefer existing agent files, the code, and the user. If a pull request template is already in the repo, note its path.
+2. When `AGENTS.md`, `GLOSSARY.md`, or `CONTEXT.md` already exists, this run is an update. Distill the current facts, conventions, project practices, terms, decisions, and template path from those files. Tell the user you will bring the files up to date with this skill. Ask whether any context or business logic has changed. Ask for gotchas or common issues to put in README troubleshooting. One ask, in the reply. Wait for the answer.
+3. When those files do not exist, ask the user for project context directly. In the same ask, ask for gotchas or common issues to put in README troubleshooting. Ask only for what the repo does not already hold from confirmed sources. Do not treat README as a confirmed source. One ask, in the reply.
+4. Scrutinize the reply. A hole is a gap that would leave a fact, a convention, a practice, a term, a template path, a decision, or a troubleshooting gotcha too vague for an agent to follow without asking again. A decision is a choice and the tradeoff. Present the holes in one reply. Skip a hole that does not change the files. When there are holes, wait for the user to clarify. When there are none, distill.
+5. Distill. Show the facts, the conventions, the fixed Practices block below, any project practices, the glossary terms, the template path, the decisions, and the README troubleshooting gotchas. On an update, start from what the existing agent files held, then apply what he said changed. The fixed Practices block is not optional. Ask the user to confirm. Write nothing before that confirmation. If he asks to drop the fixed block, push back once. Then obey.
+6. Write `AGENTS.md` from the confirmed distill. Include the fixed Practices block below, same words. Append any project practices he confirmed after that block. Include the scratch space section below, same words.
+7. From the repo root, symlink `CLAUDE.md` to `AGENTS.md`: `ln -s AGENTS.md CLAUDE.md`. Replace a broken or wrong `CLAUDE.md` link when needed.
 8. Write `GLOSSARY.md` from the confirmed terms. One term, then the meaning the user gave.
 9. Write `CONTEXT.md`. A decision he confirmed is the choice, then the tradeoff. When he confirmed none, write the heading and no decisions.
-10. Write the pull request template at the path he confirmed, using the text he confirmed. Skip this step when he gave no template.
-11. When he confirmed a template, write `.cursor/skills/write-pr-description/SKILL.md` with the skill below. Skip this step when he gave no template.
-12. Create `agent_space/`. Add a line `agent_space/` to `.gitignore` when no line already ignores that directory. Create `.gitignore` when the repo has none.
-13. Show the paths you wrote.
+10. Write README troubleshooting from the confirmed gotchas. Use the README section below. Create README when the repo has none, with only Overview, Getting started, and Troubleshooting. When README already exists, add or replace only the Troubleshooting section. Leave Overview and Getting started as they are unless he confirmed changes to them. Do not add technical detail outside Troubleshooting.
+11. Write the pull request template at the path he confirmed, using the text he confirmed. Skip this step when he gave no template.
+12. When he confirmed a template, write `.cursor/skills/write-pr-description/SKILL.md` with the skill below. Skip this step when he gave no template.
+13. Create `agent_space/`. Add a line `agent_space/` to `.gitignore` when no line already ignores that directory. Create `.gitignore` when the repo has none.
+14. Show the paths you wrote or updated.
 
 ### AGENTS.md
 
@@ -41,7 +44,16 @@ Ask what this repository is. Scrutinize the reply. Distill the clarified reply i
 
 ## Practices
 
-<How work is done here. Only what the user confirmed. Omit this section when the user gave none.>
+- Prefer the smallest change that meets the intent. Delete dead code before adding a layer.
+- Name things for the domain. Comment only for a why or a gotcha.
+- Do not invent facts, conventions, or behavior the user did not confirm.
+- Prove a change with the check or output that path produces. Do not claim it works.
+- Prefer a lint, test, or script over repeating the same rule in prose.
+- Test what the caller sees. Do not lock tests to internals.
+- Do not treat README as source of truth for architecture or API detail. Confirm with the user or the code.
+- README holds only a quick overview, getting started, and troubleshooting. Put technical detail in AGENTS.md, GLOSSARY.md, CONTEXT.md, or the code.
+
+<Any project practices he confirmed. Append after the fixed list. Omit these lines when he gave none.>
 
 ## Pull request template
 
@@ -51,6 +63,38 @@ Ask what this repository is. Scrutinize the reply. Distill the clarified reply i
 
 `agent_space/` is a scratch space for AI agents to dump any files in. Agents can use this as they wish. It is gitignored. Create `agent_space/` if it is missing. Do not commit anything inside it.
 ```
+
+Always write the fixed Practices list. Do not omit the Practices section.
+
+### README
+
+When creating README:
+
+```markdown
+# <Project name he confirmed>
+
+## Overview
+
+<One short paragraph from the confirmed project facts. No architecture or API detail.>
+
+## Getting started
+
+<Only steps he confirmed. Omit this section when he gave none.>
+
+## Troubleshooting
+
+<Gotcha he confirmed>: <What to check or do.>
+```
+
+When README already exists, write only:
+
+```markdown
+## Troubleshooting
+
+<Gotcha he confirmed>: <What to check or do.>
+```
+
+A gotcha is a common issue when running or using this repo, such as expired credentials and checking `~/.aws/credentials`. Omit Troubleshooting entries he did not confirm. When he confirmed none, omit the Troubleshooting section on a new README, and leave an existing Troubleshooting section unchanged.
 
 ### GLOSSARY.md
 
@@ -110,7 +154,11 @@ Fill this repo's pull request template.
 
 ## Don't
 
-- Invent a fact, a convention, a practice, or a term the user did not confirm.
+- Invent a fact, a convention, a practice, a term, or a gotcha the user did not confirm.
+- Take architecture, API, or convention claims from README as distill facts.
+- Put technical detail in README outside Troubleshooting.
+- Drop the fixed Practices block unless the user insisted after one push-back.
+- Wipe existing agent files and re-interview from scratch when an update would do.
 - Copy the interview into the files. Distill.
 - Add a file this skill does not name.
 - Write a secret value. Name the env var.
@@ -120,4 +168,4 @@ Fill this repo's pull request template.
 
 - You presented a hole and the user has not clarified it. Wait. Distill nothing yet.
 - The user has not confirmed the distill. Ask. Write nothing yet.
-- Those files already exist and the user has not said to replace them. Stop.
+- Agent files already exist. This is an update. Distill from them, ask what changed and for gotchas, then confirm before writing.
