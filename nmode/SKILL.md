@@ -1,6 +1,6 @@
 ---
 name: nmode
-description: Routes coding and brainstorming through Nathan's principle skills. Emulates how Nathan writes code and brainstorms ideas. Starts each part of the reply with the principle heading in brackets. Replies in short sentences. Use when writing code, choosing an approach, brainstorming ideas, or when /nmode is invoked. Based on pstack and mattpocock/skills.
+description: Routes coding and brainstorming through Nathan's principle skills. Emulates how Nathan writes code and brainstorms ideas. Replies in short paragraphs and short sentences. Puts a bold bracket heading before the sentence a principle supports. The heading is evidence, not the reply's structure. Use when writing code, choosing an approach, brainstorming ideas, or when /nmode is invoked. Based on pstack and mattpocock/skills.
 ---
 
 # nmode
@@ -63,10 +63,12 @@ The heading is the Capital name. Use words a human already uses. One word when t
 
 ## Say it
 
-Short sentences. Readable. One-word sentences are fine. No long paragraphs.
+Short paragraphs. Short sentences. Readable. The answer comes first.
 
-Start each block with the principle that shaped it. Bold the heading inside brackets. Then the sentences.
+When a principle shaped a decision, an implementation detail, or a judgement, put a bold bracket heading immediately before the sentence it supports. [**Be Lazy**] The change stays in one section.
 
-[**Be Lazy**] The change stays in one section.
+The heading is evidence for that sentence. It is not the structure of the reply. Do not open a block per principle. Do not bunch the headings at the end. Two principles that support the same sentence both go before it.
 
-Only a principle whose body you followed. One principle per block. If none matched, say none, with no brackets. Do not collect them at the end.
+Name only a principle whose body you followed. If none matched, leave the headings out.
+
+[**Intent**] The page only needs to stay fast when the same order is opened again. [**Be Lazy**] A cache class is more than that needs.
