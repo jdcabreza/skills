@@ -12,11 +12,11 @@ Set a repo up once. After that, `nmode` stays on while you choose an approach or
 
 ### Set up
 
-1. Run `/init-agent-repo` in the project. It asks for context and gotchas, infers a short Feature map and entry points list from the codebase, names what is missing, and waits. After you confirm the distill, it writes `AGENTS.md` (including Feature map and entry points when you confirmed any), a `CLAUDE.md` symlink, `GLOSSARY.md`, `CONTEXT.md`, README troubleshooting, and a gitignored `agent_space/` directory. If you name a pull request template, it writes that template and `.cursor/skills/write-pr-description/SKILL.md` in the project. Run it again to bring those files up to date with the skill: it distills from the existing agent files and asks whether context or business logic changed and whether any entry points moved.
+1. Run `/init-agent-repo` in the project. It asks for context and gotchas, infers a short Feature map and entry points list from the codebase, names what is missing, and waits. After you confirm the distill, it writes `AGENTS.md` (including Feature map and entry points when you confirmed any, and Practices expanded so agents without nmode still follow them), a `CLAUDE.md` symlink, `GLOSSARY.md`, `CONTEXT.md`, README troubleshooting, and a gitignored `agent_space/` directory. If you name a pull request template, it writes that template and `.cursor/skills/write-pr-description/SKILL.md` in the project. Run it again to bring those files up to date with the skill: it distills from the existing agent files and asks whether context or business logic changed and whether any entry points moved.
 
 2. Run `/setup-models` on this machine. It lists the Task models it can use. After you accept the list, it writes `~/.cursor/rules/nmode-models.mdc` with `alwaysApply: true`. Grill reads the `grill reviewers` line from that file. Cursor applies the rule to new sessions.
 
-3. Run `/create-verification` in the project. It asks how you check the repo, then writes one skill per check and one skill that runs those checks in order and stops on the first failure. Then run `/create-verification-maintenance`. That writes the skill that updates those checks when a later change makes them wrong.
+3. Run `/create-verification` in the project. It asks how you check the repo, then writes one skill per check and one skill that runs those checks in order and stops on the first failure. It also writes the skill index into the project README Verification section and a pointer in `AGENTS.md`. Then run `/create-verification-maintenance`. That writes the skill that updates those checks when a later change makes them wrong, and keeps that README index true.
 
 ### Understand
 
@@ -126,7 +126,7 @@ The rule ids in the skill are stable. Other skills can cite them.
 
 Initializes or updates a repository for agent work. It asks for project context and gotchas, infers a short Feature map and entry points list from the codebase for you to confirm, scrutinizes the reply for holes, and distills after you clarify. Use it with `/init-agent-repo`, or when you ask to set up or refresh `AGENTS.md` or a glossary for agents.
 
-It writes the repo files listed in the setup stage above. Confirmed entry points land in `AGENTS.md` under Feature map and entry points. A second run updates from the existing agent files and asks whether those paths moved.
+It writes the repo files listed in the setup stage above. Confirmed entry points land in `AGENTS.md` under Feature map and entry points. Practices are expanded so agents without nmode still follow them. A second run updates from the existing agent files and asks whether those paths moved.
 
 ### setup-models
 
@@ -138,13 +138,13 @@ It overwrites `~/.cursor/rules/nmode-models.mdc` after you accept the list. Gril
 
 Asks how this repository is verified, then writes one project skill that runs a specific verification skill for each way. Use it with `/create-verification`, or when you ask to set up verification.
 
-The skills land in the project's `.cursor/skills/` directory. If an overarching verification skill already exists, this skill stops and points at the maintenance skill. After a fresh setup, it tells you to run `/create-verification-maintenance`.
+The skills land in the project's `.cursor/skills/` directory. After confirm, it writes the skill index into the project README Verification section and a pointer in `AGENTS.md`. If an overarching verification skill already exists, it does not rewrite those skills, points at the maintenance skill, and still backfills the README index and AGENTS pointer when those docs are missing or stale. After a fresh setup, it tells you to run `/create-verification-maintenance`.
 
 ### create-verification-maintenance
 
 Writes the project skill that keeps this repo's verification skills true as the repo changes. Use it with `/create-verification-maintenance`, or when verification skills exist and you want them kept current.
 
-This step writes the maintenance skill. A later change updates the checks. If the project has no overarching verification skill, it tells you to run `/create-verification` first. A request to verify the repo now follows that overarching skill.
+This step writes the maintenance skill. After confirm, it writes the README Verification index (with the maintainer line) and keeps the AGENTS pointer. A later change updates the checks and that README index. If a maintainer already exists, it still backfills those docs when missing or stale. If the project has no overarching verification skill, it tells you to run `/create-verification` first. A request to verify the repo now follows that overarching skill.
 
 ## Principles
 
