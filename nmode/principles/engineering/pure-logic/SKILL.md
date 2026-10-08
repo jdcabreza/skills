@@ -28,7 +28,7 @@ A business rule decides money, permission, eligibility, status, or another domai
 
 ## Not this
 
-- Glue that only loads and saves. That is I/O. Keep it in the handler.
+- Glue that only loads, saves, or calls the outside world. That is I/O. Keep it on the placement owner this project already uses for that kind of work. When Conventions or a nearby path name that owner, use it. When no placement owner exists, ask. Do not invent a home, and do not default to a handler or framework entry point.
 - A one-off transformation with no domain rule. Keep it as the transformation. Do not invent a model for it.
 
 ## Example

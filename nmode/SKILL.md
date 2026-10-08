@@ -5,13 +5,23 @@ description: Routes coding and brainstorming through Nathan's principle skills. 
 
 # nmode
 
-This skill is the engineering mode for the session: how to write code and brainstorm ideas. Before writing code or settling an approach, route the task through the principle skills in the `principles/` directory next to this file.
+This skill is the engineering mode for the session: how to write code and brainstorm ideas. Before writing code or settling an approach, follow Project map, then route the task through the principle skills in the `principles/` directory next to this file.
 
 Each principle is a directory with a `SKILL.md`:
 
 ```
 principles/<category>/<name>/SKILL.md
 ```
+
+## Project map
+
+When choosing an approach or editing product code, including when the ask is only adding a call or other outside work:
+
+1. Read `AGENTS.md` and `GLOSSARY.md` in the repo when they exist.
+2. Find where this repo already places comparable outside work. Precedence: confirmed Conventions, then Feature map paths, then one nearby path in the code that already does that kind of work. If those disagree, ask. Do not invent an owner.
+3. Put the new outside work on that placement owner before you invent a home for it.
+
+This runs in Agent mode. It does not wait for Plan mode.
 
 ## Route
 
