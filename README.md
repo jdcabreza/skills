@@ -1,8 +1,10 @@
 # Skills
 
+A repository containing skills I use for day-to-day agent work. Ideas, principles, skills heavily taken from [pstack](https://github.com/cursor/plugins/tree/main/pstack) and [mattpocock/skills](https://github.com/mattpocock/skills/).
+
 This directory holds the skills for agent work. Each skill is a `SKILL.md` the agent reads and follows.
 
-Two kinds live here. A workflow skill runs at a stage you name. A principle skill lives under `nmode/principles/` and loads when its description matches the task.
+Two kinds live here. A workflow skill runs at a stage you name. A principle skill lives under `nmode/principles/` and loads when a playbook step names it.
 
 Each `SKILL.md` is the procedure. This file says when to open it.
 
@@ -28,7 +30,7 @@ Run `/huh` when you did not understand the last reply. It restates that reply in
 
 ### Decide and implement
 
-Use `/nmode` when writing code, choosing an approach, or brainstorming. At the start it reads every principle description. It follows each principle whose description matches the task, including how the work will be checked at the end. If two principles disagree, it asks which to follow.
+Use `/nmode` when writing code, choosing an approach, or brainstorming. It matches one playbook. The cap is 5: change, bug, refactor, no precedent, and sequence. It reads the files that playbook names. If two of those steps disagree, it asks which to follow.
 
 Open one workflow skill for the stage you are in.
 
@@ -48,6 +50,8 @@ When the work is ready for a pull request, `nmode` reads `.cursor/skills/write-p
 
 Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for holes. The agent judges the findings. The code stays as you left it. When the target is a plan file, the feedback is written into the plan. A proposal with no file is revised in the reply. `plan` also runs grill as soon as it writes a plan.
 
+Run `/skill-review` on a skill, a rule, or another instruction. It asks whether following that instruction produces the behavior it claims, including on a smaller model. The file stays as it is. The reply gives the judgement, the claim, the steps a smaller model still runs, and one change.
+
 `unslop` applies to any writing. It cuts the listed AI patterns and keeps the meaning.
 
 ## Where they fit
@@ -63,10 +67,12 @@ Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for ho
 | `huh` | The last reply was unclear | Understand |
 | `nmode` | Write code, choose an approach, or brainstorm | Decide and implement |
 | `propose` | See two or three paths for an ask before any code | Decide and implement |
-| Principles under `nmode` | The task matches that principle's description | Decide and implement |
+| Playbooks under `nmode` | change, bug, refactor, no precedent, sequence. The cap is 5 | Decide and implement |
+| Principles under `nmode` | A playbook step names that principle | Decide and implement |
 | `plan` | Plan mode is writing or revising a plan | Plan |
 | Prove It | A unit is finished, or you are about to claim the change works | Verify |
 | `grill` | Pressure-test code, a plan, or a proposal | Review |
+| `skill-review` | Review a skill or instruction, including on a smaller model | Review |
 | `write-pr-description` | The work is ready for a pull request | Review |
 | `unslop` | Any writing | Any stage |
 
@@ -76,9 +82,9 @@ Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for ho
 
 ### nmode
 
-Routes coding and brainstorming through the principle skills. Use it when writing code, choosing an approach, brainstorming, or with `/nmode`.
+Matches one of five playbooks, then reads the principle files that playbook names. Use it when writing code, choosing an approach, brainstorming, or with `/nmode`. The cap is 5: change, bug, refactor, no precedent, and sequence.
 
-It is the mode for decide and implement. The result is a routed reply. It switches to Plan mode when the blast radius is significant. You do not pick the mode. It reads `propose`, `plan`, `how`, `why`, or the project's pull request skill only at that stage. A reply that followed a principle names that principle on the sentence it supports.
+It is the mode for decide and implement. The result is a routed reply. Sequence switches to Plan mode when the blast radius is significant. You do not pick the mode. It reads `propose`, `how`, `why`, or the project's pull request skill before a playbook when that is the ask. A reply that followed a principle names that principle on the sentence it supports.
 
 ### propose
 
@@ -109,6 +115,12 @@ It reads `CONTEXT.md` and the source-control or docs tools that exist. A questio
 Spawns reviewers to interrogate code, a plan, or a proposal, then judges the findings. Use it with `/grill`, or when you ask to pressure-test one of those.
 
 It reads `grill reviewers` from `~/.cursor/rules/nmode-models.mdc`. If that file is missing, it uses the two default models named in the skill. It leaves the code unchanged. When the target is a plan file, it writes the feedback into that file.
+
+### skill-review
+
+Reviews a skill, rule, or other instruction for whether following it produces the behavior it claims, including on a smaller model. Use it with `/skill-review`, or when you ask for a self-review of an instruction.
+
+It leaves the file unchanged. Code, a plan, or a proposal goes to `grill`.
 
 ### huh
 
@@ -148,7 +160,7 @@ This step writes the maintenance skill. After confirm, it writes the README Veri
 
 ## Principles
 
-`nmode` loads a principle when the task matches its description. The description is only for routing. The body is the procedure. `disable-model-invocation` stays on. `nmode` loads the principle by reading it.
+`nmode` loads a principle when a playbook step names it. The cap is 5 playbooks: change, bug, refactor, no precedent, and sequence. The description is not the route. The body is the procedure. `disable-model-invocation` stays on. `nmode` loads the principle by reading it.
 
 They apply while you decide and while you implement. You add a new principle as another `SKILL.md` under `nmode/principles/`. The `nmode` skill states the shape.
 
@@ -172,6 +184,12 @@ They apply while you decide and while you implement. You add a new principle as 
 
 **Encode Lessons.** `nmode/principles/core/encode-lessons`. Turns a repeated line or instruction into a lint, a check, or a script. Use it when the agent is about to write the same line, comment, or instruction again, or when more text would restate a rule a check can enforce.
 
+**Build the Lever.** `nmode/principles/core/build-the-lever`. Writes the smallest script that performs the same edit in many places. Use it when the same edit would be made in many places.
+
+**Explain the Number.** `nmode/principles/core/explain-the-number`. Names what limits a measured number, and rules out that the number measured something else, before the number is trusted or reported. Use it when a task would trust, report, or act on a measured number.
+
+**Redesign.** `nmode/principles/core/redesign`. Changes the shape when a new requirement would have changed that shape if it had been there from the start. Use it when a new requirement is being added and the current shape would only hold it as a bolt-on.
+
 **Prove It.** `nmode/principles/core/prove-it`. When a unit finishes, runs the checks that unit can affect, and proves the feature by pasting the request, the response, the log, or the command output. It does not write an HTML file to show the result. The last unit runs every check. Use it when finishing a unit, before claiming a change works, or when verifying behavior. If the project has no verification skill, it reads `create-verification`. If a change makes a verification skill wrong and the project has no maintenance skill, it reads `create-verification-maintenance`.
 
 ### Engineering
@@ -183,6 +201,8 @@ They apply while you decide and while you implement. You add a new principle as 
 **Pure Logic.** `nmode/principles/engineering/pure-logic`. Keeps business rules in pure functions and in a typed domain model, separate from I/O. Use it when writing domain rules, pricing, permissions, eligibility, or lifecycle, or when I/O and rules are in the same function.
 
 **Idempotent.** `nmode/principles/engineering/idempotent`. Makes an operation that can crash or retry converge to the same end state when run again. Use it when writing code that can crash, retry, restart, time out, or run more than once, including jobs, webhooks, and writes.
+
+**Separate Writes.** `nmode/principles/engineering/separate-writes`. Gives each actor its own write target when two actors would write independent facts into one shared target. Use it when two actors would write independent facts into one file, branch, key, or state. One shared fact keeps one owner.
 
 **Root Cause.** `nmode/principles/engineering/root-cause`. Reproduces a failure, then traces it to the root cause before changing code. Use it when debugging, investigating a failure, or when the cause of a bug is not yet known.
 

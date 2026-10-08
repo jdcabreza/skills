@@ -5,7 +5,7 @@ description: Routes coding and brainstorming through Nathan's principle skills. 
 
 # nmode
 
-This skill is the engineering mode for the session: how to write code and brainstorm ideas. Before writing code or settling an approach, follow Project map, then route the task through the principle skills in the `principles/` directory next to this file.
+This skill is the engineering mode for the session: how to write code and brainstorm ideas. Before writing code or settling an approach, follow Project map, then match one playbook under `playbooks/` next to this file. The cap is 5.
 
 Each principle is a directory with a `SKILL.md`:
 
@@ -25,32 +25,40 @@ This runs in Agent mode. It does not wait for Plan mode.
 
 ## Route
 
-1. List every category directory under `principles/` next to this file.
-2. Read the `description` in each principle's frontmatter.
-3. Read the full `SKILL.md` for every principle whose description matches this task, then follow it.
-4. The description is only for routing. Follow the body.
-5. Match the work the task will involve, including how it will be checked at the end. Match that at the start.
-6. If the body says the principle does not apply, skip it. Do not name it.
+The cap is 5 playbooks. Do not add a sixth.
 
-If that directory is missing, or it contains no `SKILL.md` files, say so. Do the task without adding principles.
+Workflow wins before the match when the user asks for proposals, paths, or hypotheses, how something works end to end, why a decision was made, or the work is ready for a pull request. Read that workflow skill and follow it. Do not also run a playbook.
 
-Step 5 applies to principles. Workflow skills wait for their stage.
+Otherwise match one playbook. First hit wins.
+
+1. Bug, when the cause is unknown. `playbooks/bug.md`
+2. No precedent, when the repo has no pattern and the user has not picked. `playbooks/no-precedent.md`
+3. Refactor, when the behavior stays and the structure changes. `playbooks/refactor.md`
+4. Sequence, when the change is more than one behavior, more than one caller would notice and the behavior is not staying put, a decision would otherwise be written out as a plan, the user asks for a plan, or Plan mode is already on. `playbooks/sequence.md`
+5. Change, otherwise. A one-sentence change stays here and stays in Agent mode. `playbooks/change.md`
+
+Copy that playbook's steps before opening any other principle. Follow each step. A step you do not take stays in the list with one line why. Do not switch playbooks in this turn. Do not open a principle the playbook did not name.
+
+After the user picks a design, no-precedent does not match again.
+
+The description in a principle is not a route. The playbook step is the route. Follow the body.
+
+If `playbooks/` is missing, or it contains no playbook files, say so. Do the task without adding principles.
 
 ## Workflow
 
 Read the skill for the stage you are in. Do not read the rest at the start.
 
-The user does not pick the mode. A change that is already one sentence and one check stays in Agent mode. Do not write a plan.
+The user does not pick the mode.
 
 1. When the user asks for proposals, paths, or hypotheses, and they have not picked one, read `../propose/SKILL.md` and follow it. Do not write a plan and do not write code in that step.
-2. When the change has a significant blast radius, or Plan mode is writing or revising a plan, or the user asks for a plan, switch to Plan mode if you are not already there. Significant means more than one behavior, more than one caller who would notice, or a decision you would otherwise write out as a plan. Do not write that plan in the chat. If the switch is declined, stop. Read `../plan/SKILL.md` and follow it.
-3. When the user asks how something works end to end, read `../how/SKILL.md` and follow it.
-4. When the user asks why a decision was made, read `../why/SKILL.md` and follow it.
-5. When the work is ready for a pull request, read `.cursor/skills/write-pr-description/SKILL.md` in the repo and follow it. If that file is missing, stop. Say this repo has no pull request skill.
+2. When the user asks how something works end to end, read `../how/SKILL.md` and follow it.
+3. When the user asks why a decision was made, read `../why/SKILL.md` and follow it.
+4. When the work is ready for a pull request, read `.cursor/skills/write-pr-description/SKILL.md` in the repo and follow it. If that file is missing, stop. Say this repo has no pull request skill.
 
 ## Conflict
 
-Follow every matching principle. If two of them disagree, ask the user which to follow. Use the AskQuestion tool when it is available.
+Follow the steps of the matched playbook. If two of those steps disagree, ask the user which to follow. Use the AskQuestion tool when it is available.
 
 ## Principle shape
 
