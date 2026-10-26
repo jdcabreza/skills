@@ -29,6 +29,7 @@ Derived from `nathan-mode` Subagents lines and every playbook model call site. C
 | `design-1` | first design panel seat | judgement |
 | `design-2` | second design panel seat | judgement |
 | `design-3` | third design panel seat. unused when `design-count` is `2` | judgement |
+| `design-judge` | synthesizes the design panel into one proposal | judgement |
 | `write` | writer agent for docs and plan prose | judgement |
 | `write-review` | reviewer agent. reads the draft through the audience lens | judgement |
 
@@ -89,6 +90,7 @@ why: grok-4.7-high
 design-count: 2
 design-1: grok-4.7-high
 design-2: grok-4.7-high
+design-judge: grok-4.7-high
 write: grok-4.7-high
 write-review: grok-4.7-high
 ```

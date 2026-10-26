@@ -22,7 +22,7 @@ this skill ships with the rest of this repository. sibling skills live at the sa
 | skill | Task shape |
 | --- | --- |
 | `how`, `why` | one `explore` agent. model from the skill's role line. |
-| `design` | `design-count` parallel `generalPurpose` agents (2 or 3 from setup). models from `design-1` .. `design-N`. parent synthesizes. |
+| `design` | `design-count` parallel `generalPurpose` agents (2 or 3 from setup). models from `design-1` .. `design-N`. then one `generalPurpose` judge (`design-judge`). parent unslops and replies. |
 | `write` | one `generalPurpose` writer (`write`), then one `generalPurpose` reviewer (`write-review`) through the audience lens. |
 | `unslop` | parent only, in-process. no Task spawn. no setup model role. quick reword pass on the parent chat model. never delegate. |
 | `sequence-changes`, `open-pr` | parent only, in-process. no Task spawn. no setup model role. run on the parent chat model. these are how work lands. never delegate landing. |
