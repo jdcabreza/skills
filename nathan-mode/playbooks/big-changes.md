@@ -8,7 +8,12 @@ Use this when the ask is too large for one playbook (many asks, stacked work) or
 2. Ask the user for context surrounding the changes (who asked, why needed, what triggered). Determine a rough ordering of todos/PRs that we can route to the smaller playbooks, broken down from the bigger ask. For each todo, run the **how** and **why** skills over the relevant code surface. Return to the user your understanding of the ask, the current behavior, intended impact, context, and rough list of todos (with justification) for user verification.
 3. Copy the skeleton below into the plan file and fill up. Use `agent_space/` if existing, otherwise use `docs/`. Keep every heading and sub-block in the order shown.
 4. For each rough todo/PR from step 2, dry-run the matching playbook into the plan only. Fill that PR's Context, Changes, Alternatives, Risks, Verification, and Boxes. You may run **how**, **why**, **design**, and **write** (then **unslop**) as those playbooks would for planning. Do not create a branch, spawn a code `nathan-agent`, edit product code, commit, run **sequence-changes**, or run **open-pr**. Those steps belong to a later **orchestrate** or playbook run on an approved box. Work with the human to determine scope, context, and verification. Return the artifact for verification. Move on to the next todo/PR when approved.
-5. Link the plan file to the user for final review. When they approve the plan, stop. Tell them the next step is `/nathan-mode` with **orchestrate** on that plan path. Do not start **orchestrate** in the same run unless they ask.
+5. Link the plan file to the user for final review. When they approve the plan, run the **orchestrate gate** below. Do not start **orchestrate** until they answer.
+
+**Orchestrate gate**. After plan approval, ask whether to continue **orchestrate** in this chat or start a fresh chat with only the plan. Prefer a fresh chat when planning burned a lot of context. You cannot open a new chat yourself.
+
+- Same chat: run **orchestrate** on the plan path in this conversation.
+- Fresh chat: end this turn. Tell them to open a new Agent chat in the same workspace and send a message like `/nathan-mode orchestrate` plus the absolute plan path. Do not keep babysitting here.
 
 **Verification**. Tests alone are not sufficient verification. A PR is only verified when unit tests pass, lints and formatting pass, and behavior is as-intended.
 
@@ -77,4 +82,4 @@ Tests alone are not sufficient verification. A PR is only verified when unit tes
 
 ```
 
-**Reply**: plan path, PR ids in dependency order, which playbook each PR uses, and that **orchestrate** is the next step after approval.
+**Reply**: plan path, PR ids in dependency order, which playbook each PR uses, the orchestrate-gate choice (same chat vs fresh chat), and either that **orchestrate** continues here or the exact next message for a new chat.
