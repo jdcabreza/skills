@@ -1,6 +1,6 @@
 # Bugfix
 
-**You own this task. Plan, review, and verify.** Delegate investigation and the fix to `nathan-agent` subagents, you stay in the lead. Pick each subagent's model from the nstack-models rule (per the Subagents section and `/setup-nstack`).
+**You own this task. Plan, review, and verify.** Route root-cause through **how** and **why** (`explore`). Delegate the fix to a `nathan-agent`. You stay in the lead. Pick each subagent's model from the nstack-models rule (per the Subagents section and `/setup-nstack`).
 
 Be scientific. Use evidence to support your claims. Ship only the smallest change that the evidence justifies.
 

@@ -15,7 +15,7 @@ this skill ships with the rest of this repository. sibling skills live at the sa
 
 **setup is non-negotiable.** before any `/nathan-mode` work that spawns a `nathan-agent` or reads role models, require both `~/.cursor/agents/nathan-agent.md` and `~/.cursor/rules/nstack-models.mdc`. if either is missing, stop and tell the user to run `/setup-nstack`. do not substitute `generalPurpose` for `nathan-agent`. do not invent model slugs.
 
-**use `subagent_type: "nathan-agent"` for any subagent you spawn inside a playbook step.** the chat that receives `/nathan-mode` runs the playbook. never spawn a `nathan-agent` to run the playbook itself. the **orchestrate** playbook may spawn one coordinator `nathan-agent` to babysit a plan; that coordinator is a delegate, not the playbook runner.
+**code and orchestrate coordinator delegates use `subagent_type: "nathan-agent"`.** the chat that receives `/nathan-mode` runs the playbook. never spawn a `nathan-agent` to run the playbook itself. the **orchestrate** playbook may spawn one coordinator `nathan-agent` to babysit a plan; that coordinator is a delegate, not the playbook runner.
 
 **routed workflow skills set their own Task shape.** respect what the skill prescribes. do not override those spawns to `nathan-agent`.
 
@@ -28,13 +28,13 @@ this skill ships with the rest of this repository. sibling skills live at the sa
 | `huh` | parent only, in-process. no Task spawn. no setup model role. rewrite the prior reply for a tired engineer. applies unslop, then reshapes. never delegate. |
 | `sequence-changes`, `open-pr` | parent only, in-process. no Task spawn. no setup model role. run on the parent chat model. these are how work lands. never delegate landing. |
 
-**defaults for every `Task` call.** `run_in_background: true`, file pointers not inlined context, explicit model from the nstack-models rule per role (via `/setup-nstack`). code delegates use the playbook role (`implement`, `refactor`, `bugfix`) and raise or lower via step lines when difficulty warrants. coordinator babysitting reads `orchestrate`. if there is no rule from `/setup-nstack`, stop and tell the user to run it. do not assume reasoning budget.
+**defaults for every `Task` call.** `run_in_background: true`, file pointers not inlined context, model from the nstack-models rule per role (via `/setup-nstack`). when the role value is `inherit-parent` or `auto`, omit Task `model` so the child runs on the parent chat model. otherwise pass the role's slug explicitly. code delegates use the playbook role (`implement`, `refactor`, `bugfix`) and raise or lower via step lines when difficulty warrants. coordinator babysitting reads `orchestrate`. if there is no rule from `/setup-nstack`, stop and tell the user to run it. do not assume reasoning budget.
 
 **match the model to the job.** start from the role's base slug in the nstack-models rule. setup writes optional full-slug steps beside it: `role+1`, `role+2`, `role-1`, `role-2`. raise one step means use `role+1` when present (hardest or subtlest work may use `role+2` if present). lower one step means `role-1`; routine work may use `role-2`. if a step line is missing, keep the base slug. never pick a `fast` or `max` slug. never invent a slug that is not in the rule or the detected set.
 
 **drain before you depend.** background is the default so the parent can keep moving or end the turn while workers run. do not mark a step done, and do not start a dependent step, until you have read and judged each required worker's report. when waiting on background work with nothing else useful to do, end the turn.
 
-**the parent is accountable for what lands.** the chat that received `/nathan-mode` is the parent. landing means push to remote, open or update PRs, mark plan proof as shipped, or tell the human the work is done. playbooks create the scoped branch (`feature/<name>` or `bugfix/<name>` only) before code work and own local commits. never commit on `develop`, `main`, or `master`. workers and the orchestrate coordinator may edit the tree, verify, and leave local commits on that branch. they do not land. after you drain and review, you run `sequence-changes` and `open-pr` yourself. `open-pr` opens the MR only. it does not create branches or commits. `open-pr` is the default last step unless the user says otherwise. review every diff. write your own summary. do not pass through a subagent's words verbatim. a second opinion is the same prompt against a different model. agreement is high-signal.
+**the parent is accountable for what lands.** the chat that received `/nathan-mode` is the parent. landing means push to remote, open or update PRs, mark plan proof as shipped, or tell the human the work is done. playbooks create the scoped branch (`feature/<name>` or `bugfix/<name>` only) before code work and own local commits. never commit on `develop`, `main`, or `master`. workers and the orchestrate coordinator may edit the tree, verify, and leave local commits on that branch. they do not land. after you drain and review, you run `sequence-changes` then `open-pr` yourself. `open-pr` opens the GitLab MR only (push, `glab` create, `cursor review` Bugbot comment). it does not create branches or commits. auto-land is the default: run `open-pr` unless the user explicitly says otherwise (local-only, no MR, hold landing). exceptions: **document** and **authoring a skill** skip `sequence-changes` then still run `open-pr` when publishing via MR. **big-changes** produces the plan file only; it does not implement, sequence, or open an MR. **investigate** does not land. review every diff. write your own summary. do not pass through a subagent's words verbatim. a second opinion is the same prompt against a different model. agreement is high-signal.
 
 **fresh subagents by default.** new scope gets a new agent with consolidated brief: the original ask, every later directive, and the prior agent's report and branch if any. resume only to continue the same scoped task after a verify failure or an explicit revision of that same brief. do not resume to start unrelated work.
 
@@ -61,8 +61,8 @@ open a todo list whose first items are the matched playbooks steps, copied in ve
 - **implement.** implementing new or changed behaviors.
 - **refactor.** behavior-preserving change. usually to improve maintainability or performance.
 - **big-changes.** catch-all when the ask is too large for one playbook, or a change needs a multi-step plan because of blast radius. produces the plan file. not for brainstorming architectures; that is the **design** skill.
-- **authoring a skill.** writing or editing a skill.
-- **document.** writing documentation.
+- **authoring a skill.** writing or editing a skill. skips `sequence-changes`; lands with `open-pr` when publishing via MR.
+- **document.** writing documentation. skips `sequence-changes`; lands with `open-pr` when publishing via MR.
 - **orchestrate.** babysit a plan file (usually from **big-changes**) via a coordinator agent. parent lands after review.
 
 ## Principles

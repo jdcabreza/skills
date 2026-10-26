@@ -28,6 +28,7 @@ The MR link, a short overview of what went in the MR description, the branch nam
 
 ## Notes
 
-- Use `glab` for push-adjacent MR create and the Bugbot comment (`glab mr create`, `glab mr note`). Do not default to `gh` on GitLab remotes.
+- GitLab-only. Use `glab` for push-adjacent MR create and the Bugbot comment (`glab mr create`, `glab mr note`). Do not default to `gh`.
+- Auto-land is the default from change playbooks. Skip only when the user explicitly says otherwise.
 - Do not invent proof. Use verification the playbook already ran. If there is no proof, say so in the description and stop before creating the MR unless the user explicitly accepts shipping without it.
-- Stacked MRs: open only the MR this invocation was asked for. Do not open the whole stack unless asked.
+- Stacked MRs: open only the MR this invocation was asked for. Do not open the whole stack unless asked. Each stack entry's branch base is the prior tip; **sequence-changes** must use that same prior tip as its sequencing base.

@@ -33,7 +33,7 @@ Derived from `nathan-mode` Subagents lines and every playbook model call site. C
 | `write` | writer agent for docs and plan prose | judgement |
 | `write-review` | reviewer agent. reads the draft through the audience lens | judgement |
 
-`unslop`, `sequence-changes`, and `open-pr` are parent-only, in-process skills. They have no setup model role and never get a Task spawn. They run on the parent chat model (`/nathan-mode` chat).
+`unslop`, `huh`, `sequence-changes`, and `open-pr` are parent-only, in-process skills. They have no setup model role and never get a Task spawn. They run on the parent chat model (`/nathan-mode` chat).
 
 Optional step lines per model role (not for `design-count`): `role+1`, `role+2`, `role-1`, `role-2`. nathan-mode uses these as one/two-step raise and lower. Write full slugs the user confirmed from the detected set. Omit a step line when no distinct slug exists.
 
@@ -71,10 +71,10 @@ Write `~/.cursor/rules/nstack-models.mdc` with `alwaysApply: true` and one line 
 
 ```
 ---
-description: nstack per-role model choices (overrides skill defaults)
+description: nstack per-role model choices
 alwaysApply: true
 ---
-# nstack model configuration. One line per role. Delete a line to fall back to the skill default.
+# nstack model configuration. One line per role from the Roles table. Keep every required role present; re-run /setup-nstack to change values.
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Task `model`).
 # optional `role+1` / `role+2` / `role-1` / `role-2`: full slugs for nathan-mode raise/lower steps.
 # never use fast mode. never use max.
