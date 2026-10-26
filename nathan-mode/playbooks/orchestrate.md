@@ -13,6 +13,7 @@
 - Execute plan boxes in dependency order. One box at a time unless the plan marks boxes as parallel.
 - For each box, write a worker brief in the template below. Spawn workers as `nathan-agent` with `run_in_background: true` and the model for that box's shape (`implement`, `refactor`, or `bugfix`).
 - Drain each required worker before starting a dependent box. Review their report. Write your own summary into **Coordinator Notes**. Do not paste worker output verbatim.
+- Before the first code box, ensure a scoped branch exists: `feature/<branch-name>` or `bugfix/<branch-name>` only. Never commit on `develop`, `main`, or `master`. Create it if missing. Workers leave commits on that branch.
 - Do not land. No push to remote, no open or update PR, no **sequence-changes**, no **open-pr**, no telling the human the plan is shipped. Leave local work on the scoped branch. Mark each finished box ready-to-land in **Coordinator Notes** with proof pointers.
 - Escalate to the human for irreversible actions, genuine product or preference calls, or a blocker you cannot clear. Log the escalation in **Coordinator Notes** and stop that box.
 - For reversible calls you can evidence, log in **Coordinator Notes**, then act. The human course-corrects later.
