@@ -1,215 +1,65 @@
-# Skills
+# nstack
 
-A repository containing skills I use for day-to-day agent work. Ideas, principles, skills heavily taken from [pstack](https://github.com/cursor/plugins/tree/main/pstack) and [mattpocock/skills](https://github.com/mattpocock/skills/).
+a repository containing skills and workflows that i use day-to-day to ship code.
+ideas heavily taken from [pstack](https://github.com/cursor/plugins/tree/main/pstack).
+adjusted based on my constraints, ideas, and personal workflow.
 
-This directory holds the skills for agent work. Each skill is a `SKILL.md` the agent reads and follows.
+also a personal attempt to better understand modern agentic workflows and how to better utilize agents.
 
-Two kinds live here. A workflow skill runs at a stage you name. A principle skill lives under `nmode/principles/` and loads when a playbook step names it.
+## context
 
-Each `SKILL.md` is the procedure. This file says when to open it.
+i work in a fintech environment where it's prudent to know what's going on. we're not _that_ free to break things.
+humans remain accountable for the code we put out. when something breaks, we affect real people and their banking.
+hopefully, this set of skills allows us to:
+- maintain a low-level understanding of and agency within our codebases
+- put out high-quality code that doesn't sloppify our codebases
+- still take advantage of what agents enable: ease of writing code
 
-## Intended workflow
+plus, i don't have a large token budget so i tried to make this cheaper to use. hehe.
 
-Set a repo up once. After that, `nmode` stays on while you choose an approach or write code. The other workflow skills wait until their stage.
+## getting started
 
-### Set up
+before you do anything, run `/setup-nstack` to determine the models to be used across the skills.
 
-1. Run `/init-agent-repo` in the project. It asks for context and gotchas, infers a short Feature map and entry points list from the codebase, names what is missing, and waits. After you confirm the distill, it writes `AGENTS.md` (including Feature map and entry points when you confirmed any, and Practices expanded so agents without nmode still follow them), a `CLAUDE.md` symlink, `GLOSSARY.md`, `CONTEXT.md`, README troubleshooting, and a gitignored `agent_space/` directory. If you name a pull request template, it writes that template and `.cursor/skills/write-pr-description/SKILL.md` in the project. Run it again to bring those files up to date with the skill: it distills from the existing agent files and asks whether context or business logic changed and whether any entry points moved.
+## usage
 
-2. Run `/setup-models` on this machine. It lists the Task models it can use. After you accept the list, it writes `~/.cursor/rules/nmode-models.mdc` with `alwaysApply: true`. Grill reads the `grill reviewers` line from that file. Cursor applies the rule to new sessions.
+### nathan-mode
 
-3. Run `/create-verification` in the project. It asks how you check the repo, then writes one skill per check and one skill that runs those checks in order and stops on the first failure. It also writes the skill index into the project README Verification section and a pointer in `AGENTS.md`. Then run `/create-verification-maintenance`. That writes the skill that updates those checks when a later change makes them wrong, and keeps that README index true.
+`/nathan-mode` is the main catch-all skill. it'll read your request, pick from a set of playbooks, and orchestrate across the other skills as needed. i typically just use this unless i have a specific set of steps to run.
 
-### Understand
+sibling skills live at the same level as `nathan-mode/` in this repository.
 
-Run `/how` when you need one behavior from the start of the path to the end. Each step cites a file or a symbol.
+| skill | use when |
+| --- | --- |
+| `/nathan-mode` | default entry point. use for any code changes, brainstorming, design. |
+| `/setup-nstack` | configure models per role; install `nathan-agent` to `~/.cursor/agents/`. |
+| `/how` | figure out how something works. |
+| `/why` | get the motivation and intent behind why something was built that way. |
+| `/unslop` | clean up writing. removes AI tells. |
+| `/write` | technical writing. docs, RFCs, READMEs, PR descriptions, commit messages. writer then audience reviewer. |
+| `/design` | brainstorm architectures, solutions, implementations. parallel panel of 2-3 models. |
+| `/sequence-changes` | organize changes into atomic, verifiable commits or PRs. |
+| `/open-pr` | open a PR. |
 
-Run `/why` when you need the decision and the tradeoff. It reads `CONTEXT.md`, then a source-control or docs tool when one exists. If nothing recorded the choice, it says so.
+`authoring a skill` also uses Cursor's built-in `/create-skill`.
 
-Run `/huh` when you did not understand the last reply. It restates that reply in plain English.
+workers spawned from playbook steps use `subagent_type: "nathan-agent"`. source file is `agents/nathan-agent.md`. `/setup-nstack` copies it to `~/.cursor/agents/nathan-agent.md` so Task can discover it without the marketplace. model choices live in `~/.cursor/rules/nstack-models.mdc` after setup.
 
-### Decide and implement
+### playbooks
 
-Use `/nmode` when writing code, choosing an approach, or brainstorming. It matches one playbook. The cap is 5: change, bug, refactor, no precedent, and sequence. It reads the files that playbook names. If two of those steps disagree, it asks which to follow.
+all the playbooks that `/nathan-mode` supports:
 
-Open one workflow skill for the stage you are in.
+| playbook | used for |
+| --- | --- |
+| investigate | a read-only question. how does X work, why was Y built this way, are we sure about Z. |
+| bugfix | fixing known issues. reproduce a defect, root-cause it, then fix. |
+| implement | implementing new or changed behaviors. |
+| refactor | a behavior-preserving change. usually to improve maintainability or performance. |
+| big-changes | catch-all when the ask is too large for one playbook, or blast radius needs a multi-step plan. produces the plan file. |
+| authoring a skill | writing or editing a skill. |
+| document | writing documentation. |
+| orchestrate | babysit a plan file (usually from big-changes) via a coordinator. parent lands after review. |
 
-A change that is already one sentence and one check stays in Agent mode. The agent does not write a plan for it.
+### principles
 
-A change with a significant blast radius goes to Plan mode. The agent switches. You do not pick the mode. `plan` adds a brief, a blast radius, and units to the plan file, and marks principles inline where they shaped a decision. As soon as that file exists, the agent runs grill and writes that feedback into the plan. You edit the plan. The agent builds when you say to build.
-
-A bug with an unknown cause follows Root Cause. Reproduce it, then trace it, before changing code. A second failure at the same check follows Assumptions.
-
-A new interaction with no pattern in the repo follows Design Options. The agent shows two or three ideas and writes no code until you pick one.
-
-When you want the paths before any code, run `/propose`. Two explorers each generate hypotheses with pros, cons, and proof. The main agent runs an intermediary pass between them, then returns the consolidated paths. It does not write a prototype.
-
-When a unit finishes, Prove It runs the checks that unit can affect and pastes the path's request, response, log, or command output. It does not write an HTML file to show the result. The last unit runs every check the overarching verification skill names. If the project has no verification skill, Prove It reads `create-verification`. If a change makes a verification skill wrong and the project has no maintenance skill, Prove It reads `create-verification-maintenance`.
-
-When the work is ready for a pull request, `nmode` reads `.cursor/skills/write-pr-description/SKILL.md` in the project. That skill fills the template from the brief, the units, and the verification output, and returns it as one fenced markdown block you can copy into the merge request. If the file is missing, `nmode` stops and says this repo has no pull request skill.
-
-Run `/grill` to pressure-test code, a plan, or a proposal. Reviewers look for holes. The agent judges the findings. The code stays as you left it. When the target is a plan file, the feedback is written into the plan. A proposal with no file is revised in the reply. `plan` also runs grill as soon as it writes a plan.
-
-Run `/skill-review` on a skill, a rule, or another instruction. It asks whether following that instruction produces the behavior it claims, including on a smaller model. The file stays as it is. The reply gives the judgement, the claim, the steps a smaller model still runs, and one change.
-
-`unslop` applies to any writing. It cuts the listed AI patterns and keeps the meaning.
-
-## Where they fit
-
-| Skill | When you use it | Stage |
-| --- | --- | --- |
-| `init-agent-repo` | Initialize or update a repo for agents, or add `AGENTS.md` and a glossary | Set up |
-| `setup-models` | Configure models, or change the model budget | Set up |
-| `create-verification` | Set up how agents confirm this repo | Set up |
-| `create-verification-maintenance` | Keep those checks current after they exist | Set up |
-| `how` | How one behavior works across the repo | Understand |
-| `why` | Why a decision was made | Understand |
-| `huh` | The last reply was unclear | Understand |
-| `nmode` | Write code, choose an approach, or brainstorm | Decide and implement |
-| `propose` | See two or three paths for an ask before any code | Decide and implement |
-| Playbooks under `nmode` | change, bug, refactor, no precedent, sequence. The cap is 5 | Decide and implement |
-| Principles under `nmode` | A playbook step names that principle | Decide and implement |
-| `plan` | Plan mode is writing or revising a plan | Plan |
-| Prove It | A unit is finished, or you are about to claim the change works | Verify |
-| `grill` | Pressure-test code, a plan, or a proposal | Review |
-| `skill-review` | Review a skill or instruction, including on a smaller model | Review |
-| `write-pr-description` | The work is ready for a pull request | Review |
-| `unslop` | Any writing | Any stage |
-
-`write-pr-description` lives in the project. `/init-agent-repo` writes it there when you name a template.
-
-## Workflow skills
-
-### nmode
-
-Matches one of five playbooks, then reads the principle files that playbook names. Use it when writing code, choosing an approach, brainstorming, or with `/nmode`. The cap is 5: change, bug, refactor, no precedent, and sequence.
-
-It is the mode for decide and implement. The result is a routed reply. Sequence switches to Plan mode when the blast radius is significant. You do not pick the mode. It reads `propose`, `how`, `why`, or the project's pull request skill before a playbook when that is the ask. A reply that followed a principle names that principle on the sentence it supports.
-
-### propose
-
-Spawns two explorers that each generate proposals for an ask, then acts as intermediary between them and returns the consolidated paths. Use it with `/propose`, or when you ask for proposals, paths, or hypotheses before any code.
-
-A proposal is a hypothesis with pros, cons, and proof. Proof is a constraint, a behavior, or a path this product already has. The explorers use the first two models from `grill reviewers`. The main agent consolidates. It does not write code. It does not call `grill`.
-
-### plan
-
-Adds a brief, a blast radius, and verifiable units to the Cursor plan, marks principles inline where they shaped a decision, then runs grill and writes that feedback into the plan. Use it when Plan mode is writing or revising a plan, or when `nmode` is about to plan a change.
-
-It reads `AGENTS.md` and `GLOSSARY.md` when the repo has them. The plan is the file Plan mode writes. It stops when that file is in front of you, after grill has added the feedback. A change that is already one sentence and one check stays in Agent mode.
-
-### how
-
-Traces how a behavior works end to end, with a citation on each step. Use it with `/how`, or when you ask how something works across the repository.
-
-A question about why a decision was made goes to `why`. A restatement of the last reply goes to `huh`.
-
-### why
-
-Cites the decision and the tradeoff for a choice in the repository. Use it with `/why`, or when you ask why a decision was made.
-
-It reads `CONTEXT.md` and the source-control or docs tools that exist. A question about how the code runs goes to `how`.
-
-### grill
-
-Spawns reviewers to interrogate code, a plan, or a proposal, then judges the findings. Use it with `/grill`, or when you ask to pressure-test one of those.
-
-It reads `grill reviewers` from `~/.cursor/rules/nmode-models.mdc`. If that file is missing, it uses the two default models named in the skill. It leaves the code unchanged. When the target is a plan file, it writes the feedback into that file.
-
-### skill-review
-
-Reviews a skill, rule, or other instruction for whether following it produces the behavior it claims, including on a smaller model. Use it with `/skill-review`, or when you ask for a self-review of an instruction.
-
-It leaves the file unchanged. Code, a plan, or a proposal goes to `grill`.
-
-### huh
-
-Restates the agent's last reply in plain English. Use it with `/huh`, or when you did not understand what was just said.
-
-It can follow any other skill.
-
-### unslop
-
-Cuts AI tells from writing. It applies to any writing. The description says it must always apply.
-
-The rule ids in the skill are stable. Other skills can cite them.
-
-### init-agent-repo
-
-Initializes or updates a repository for agent work. It asks for project context and gotchas, infers a short Feature map and entry points list from the codebase for you to confirm, scrutinizes the reply for holes, and distills after you clarify. Use it with `/init-agent-repo`, or when you ask to set up or refresh `AGENTS.md` or a glossary for agents.
-
-It writes the repo files listed in the setup stage above. Confirmed entry points land in `AGENTS.md` under Feature map and entry points. Practices are expanded so agents without nmode still follow them. A second run updates from the existing agent files and asks whether those paths moved.
-
-### setup-models
-
-Detects available Task models and writes the rule that sets grill's reviewers. Use it with `/setup-models`, or when you ask to configure models or change the model budget.
-
-It overwrites `~/.cursor/rules/nmode-models.mdc` after you accept the list. Grill keeps reading that file.
-
-### create-verification
-
-Asks how this repository is verified, then writes one project skill that runs a specific verification skill for each way. Use it with `/create-verification`, or when you ask to set up verification.
-
-The skills land in the project's `.cursor/skills/` directory. After confirm, it writes the skill index into the project README Verification section and a pointer in `AGENTS.md`. If an overarching verification skill already exists, it does not rewrite those skills, points at the maintenance skill, and still backfills the README index and AGENTS pointer when those docs are missing or stale. After a fresh setup, it tells you to run `/create-verification-maintenance`.
-
-### create-verification-maintenance
-
-Writes the project skill that keeps this repo's verification skills true as the repo changes. Use it with `/create-verification-maintenance`, or when verification skills exist and you want them kept current.
-
-This step writes the maintenance skill. After confirm, it writes the README Verification index (with the maintainer line) and keeps the AGENTS pointer. A later change updates the checks and that README index. If a maintainer already exists, it still backfills those docs when missing or stale. If the project has no overarching verification skill, it tells you to run `/create-verification` first. A request to verify the repo now follows that overarching skill.
-
-## Principles
-
-`nmode` loads a principle when a playbook step names it. The cap is 5 playbooks: change, bug, refactor, no precedent, and sequence. The description is not the route. The body is the procedure. `disable-model-invocation` stays on. `nmode` loads the principle by reading it.
-
-They apply while you decide and while you implement. You add a new principle as another `SKILL.md` under `nmode/principles/`. The `nmode` skill states the shape.
-
-### Core
-
-**Intent.** `nmode/principles/core/intent`. Derives what you want the change to do, and treats the code as how that intent is implemented. Use it when reading an ask, choosing an approach, or when the request names a mechanism, a file, or a pattern.
-
-**Domain Facts.** `nmode/principles/core/domain-facts`. Names the actors, entities, types, and shared state, then reasons from those facts. Use it when choosing an approach, designing how something works, or introducing a type, entity, or shared state.
-
-**Assumptions.** `nmode/principles/core/assumptions`. Checks assumptions you brought and assumptions the agent brought. After two failed fixes at the same gate, it challenges the shared assumption. Use it when an ask, a design, or a plan depends on a premise that is not in the code and not in what you just stated, or when a second attempt fails the same test, check, error, or review.
-
-**Candor.** `nmode/principles/core/candor`. Replies with a real judgement, and declines or pushes back when that judgement is no. Use it when you ask the agent to do something, when it would otherwise agree by default, or when a recommendation would only validate the ask.
-
-**Design Options.** `nmode/principles/core/design-options`. Presents two or three evidenced ideas and no code when an interaction has no precedent in the repo. Use it when brainstorming something new, when the repo has no pattern for this interaction, or before inventing a new kind of UI or flow.
-
-**User First.** `nmode/principles/core/user-first`. Chooses the caller's experience over the easier implementation, at the API and at the class interface. Use it when a design or code choice can push work, data, or complexity onto you or the caller.
-
-**Be Lazy.** `nmode/principles/core/be-lazy`. Deletes and simplifies first, then gets the most impact from the least code. Use it when writing or editing code, adding behavior, adding a file, type, or wrapper, or when the current code already does more than the ask needs.
-
-**Verifiable Units.** `nmode/principles/core/verifiable-units`. Splits work into small units that can each be checked, committed, or merged on their own. Use it when planning a change, starting work that touches more than one behavior, splitting commits or merge requests, or deciding how to land the work.
-
-**Encode Lessons.** `nmode/principles/core/encode-lessons`. Turns a repeated line or instruction into a lint, a check, or a script. Use it when the agent is about to write the same line, comment, or instruction again, or when more text would restate a rule a check can enforce.
-
-**Build the Lever.** `nmode/principles/core/build-the-lever`. Writes the smallest script that performs the same edit in many places. Use it when the same edit would be made in many places.
-
-**Explain the Number.** `nmode/principles/core/explain-the-number`. Names what limits a measured number, and rules out that the number measured something else, before the number is trusted or reported. Use it when a task would trust, report, or act on a measured number.
-
-**Redesign.** `nmode/principles/core/redesign`. Changes the shape when a new requirement would have changed that shape if it had been there from the start. Use it when a new requirement is being added and the current shape would only hold it as a bolt-on.
-
-**Prove It.** `nmode/principles/core/prove-it`. When a unit finishes, runs the checks that unit can affect, and proves the feature by pasting the request, the response, the log, or the command output. It does not write an HTML file to show the result. The last unit runs every check. Use it when finishing a unit, before claiming a change works, or when verifying behavior. If the project has no verification skill, it reads `create-verification`. If a change makes a verification skill wrong and the project has no maintenance skill, it reads `create-verification-maintenance`.
-
-### Engineering
-
-**Descriptive Code.** `nmode/principles/engineering/descriptive-code`. Writes code a reader can describe back. Domain names, plain control flow, and a comment only for a why or a gotcha. Use it when writing or editing code, naming identifiers, choosing a language feature or API, or when adding, editing, or reviewing comments.
-
-**Types.** `nmode/principles/engineering/types`. Uses types so illegal states cannot be represented, and parses outside data only at the boundary. Use it when defining data, signatures, models, or states, when a value could be missing, conflicting, or a bare string, or when data crosses into the system.
-
-**Pure Logic.** `nmode/principles/engineering/pure-logic`. Keeps business rules in pure functions and in a typed domain model, separate from I/O. Use it when writing domain rules, pricing, permissions, eligibility, or lifecycle, or when I/O and rules are in the same function.
-
-**Idempotent.** `nmode/principles/engineering/idempotent`. Makes an operation that can crash or retry converge to the same end state when run again. Use it when writing code that can crash, retry, restart, time out, or run more than once, including jobs, webhooks, and writes.
-
-**Separate Writes.** `nmode/principles/engineering/separate-writes`. Gives each actor its own write target when two actors would write independent facts into one shared target. Use it when two actors would write independent facts into one file, branch, key, or state. One shared fact keeps one owner.
-
-**Root Cause.** `nmode/principles/engineering/root-cause`. Reproduces a failure, then traces it to the root cause before changing code. Use it when debugging, investigating a failure, or when the cause of a bug is not yet known.
-
-**Test Behavior.** `nmode/principles/engineering/test-behavior`. Tests the behavior a user or caller sees, and deletes tests locked to internals. Use it when writing tests, reviewing tests, or deciding whether a test should exist.
-
-### Delegation
-
-**Context Window.** `nmode/principles/delegation/context-window`. Sends bulk context to a subagent and keeps a summary in the main thread. Use it when a task would load files, logs, search results, or other bulk into the main thread.
-
-**Never Block.** `nmode/principles/delegation/never-block`. Proceeds on a reversible choice and shows the result. Use it when the agent is about to ask whether to do something you could undo after seeing the result.
+`nathan-mode` uses a set of principles to guide the agent. they live in `nathan-mode/SKILL.md`.
