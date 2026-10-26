@@ -45,7 +45,9 @@ write the reply clean as you draft it. a cleanup pass after drafting does not re
 - **no em-dashes.** write a file-list bullet as a sentence and a bold section header as its own sentence.
 - **terse is not an excuse to drop content.** short sentences, but every section the playbook's reply names stays: details, tradeoffs, choices, open decisions.
 - **never fabricate a link, citation, or transcript reference.** link only artifacts you produced or read this session.
-- **every claim carries its evidence or its label in the same sentence.** measured, inferred, or guess. a prediction or unseen cause is a guess. never hand the human a check you could run.
+- **every claim carries its evidence or its label in the same sentence.** after the statement: `[**<level>**. <short reason>.]`. levels are measured, observed, inferred, or guess. measured is a check you ran or a quantity you took. observed is a known outcome or inspectable fact without claiming you instrumented the path. inferred is reasoned from evidence. a prediction or unseen cause is a guess. never hand the human a check you could run.
+  - this is a bug. [**observed**. code block is never reached.]
+  - p95 was 40ms. [**measured**. ran the benchmark twice.]
 
 every playbook ends with a reply written this way. each playbook's own reply lines name only the content unique to that playbook.
 
@@ -64,7 +66,9 @@ open a todo list whose first items are the matched playbooks steps, copied in ve
 
 ## Principles
 
-core principles guiding each request. name each principle that shaped a decision inline with that decision, not in a block at the end of the reply. name the principle and the specific choice it made in the same place.
+core principles guiding each request. encode each principle that shaped a decision inline with that decision, not in a block at the end of the reply. put the principle tag first, then the choice it made:
+- [**<principle>**] <decision it affected, etc.>
+- [**reason from first principles**] data structures should be X, Y, Z...
 
 - **identify intent and root cause.** solve the underlying problem, not just the literal request. wording is inconsistent. understand the desired outcome and keep asking why until the rationale or root cause is sufficiently clear. "we've always done it this way" is not sufficient justification.
 - **reason from first principles.** break problems down into fundamentals before choosing a solution. model the domain, data structures, types, contracts, dependencies, and interactions. don't take the requested solution or existing architecture at face value.
