@@ -36,6 +36,7 @@ sibling skills live at the same level as `nathan-mode/` in this repository.
 | `/how` | figure out how something works. |
 | `/why` | get the motivation and intent behind why something was built that way. |
 | `/unslop` | clean up writing. removes AI tells. |
+| `/huh` | rewrite the last agent reply into plain language a tired engineer can follow. |
 | `/write` | technical writing. docs, RFCs, READMEs, PR descriptions, commit messages. writer then audience reviewer. |
 | `/design` | brainstorm architectures, solutions, implementations. parallel panel of 2-3 models. |
 | `/sequence-changes` | organize changes into atomic, verifiable commits or PRs. |

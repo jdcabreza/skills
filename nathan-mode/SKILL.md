@@ -25,6 +25,7 @@ this skill ships with the rest of this repository. sibling skills live at the sa
 | `design` | `design-count` parallel `generalPurpose` agents (2 or 3 from setup). models from `design-1` .. `design-N`. then one `generalPurpose` judge (`design-judge`). parent unslops and replies. |
 | `write` | one `generalPurpose` writer (`write`), then one `generalPurpose` reviewer (`write-review`) through the audience lens. |
 | `unslop` | parent only, in-process. no Task spawn. no setup model role. quick reword pass on the parent chat model. never delegate. |
+| `huh` | parent only, in-process. no Task spawn. no setup model role. rewrite the prior reply for a tired engineer. applies unslop, then reshapes. never delegate. |
 | `sequence-changes`, `open-pr` | parent only, in-process. no Task spawn. no setup model role. run on the parent chat model. these are how work lands. never delegate landing. |
 
 **defaults for every `Task` call.** `run_in_background: true`, file pointers not inlined context, explicit model from the nstack-models rule per role (via `/setup-nstack`). code delegates use the playbook role (`implement`, `refactor`, `bugfix`) and raise or lower via step lines when difficulty warrants. coordinator babysitting reads `orchestrate`. if there is no rule from `/setup-nstack`, stop and tell the user to run it. do not assume reasoning budget.
