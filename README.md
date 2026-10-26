@@ -46,7 +46,7 @@ sibling skills live at the same level as `nathan-mode/` in this repository.
 
 code and orchestrate workers use `subagent_type: "nathan-agent"`. source file is `agents/nathan-agent.md`. `/setup-nstack` copies it to `~/.cursor/agents/nathan-agent.md` so Task can discover it without the marketplace. routed skills (`how`, `why`, `design`, `write`) keep their own Task shapes in `nathan-mode/SKILL.md`. parent-only skills (`unslop`, `huh`, `sequence-changes`, `open-pr`) never spawn Tasks. model choices live in `~/.cursor/rules/nstack-models.mdc` after setup.
 
-landing defaults to `sequence-changes` then `/open-pr` after the parent reviews. say otherwise if you want local-only. **document** and **authoring a skill** skip `sequence-changes`. **big-changes** produces a plan file only; it does not implement or open an MR.
+landing defaults to `sequence-changes` then `/open-pr` after the parent reviews. say otherwise if you want local-only. **document** and **authoring a skill** skip `sequence-changes`. **big-changes** produces a plan file only; after approval, run **orchestrate** to babysit boxes. **orchestrate** leaves local commits; the parent lands each ready PR.
 
 ### playbooks
 
@@ -58,10 +58,10 @@ all the playbooks that `/nathan-mode` supports:
 | bugfix | fixing known issues. reproduce a defect, root-cause it, then fix. |
 | implement | implementing new or changed behaviors. |
 | refactor | a behavior-preserving change. usually to improve maintainability or performance. |
-| big-changes | catch-all when the ask is too large for one playbook, or blast radius needs a multi-step plan. produces the plan file. |
+| big-changes | catch-all when the ask is too large for one playbook, or blast radius needs a multi-step plan. produces the plan file; stops after approval. |
 | authoring a skill | writing or editing a skill. |
 | document | writing documentation. |
-| orchestrate | babysit a plan file (usually from big-changes) via a coordinator. parent lands after review. |
+| orchestrate | babysit an approved plan (usually from big-changes). coordinator drives boxes; parent lands each ready PR. |
 
 ### principles
 
