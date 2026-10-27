@@ -38,6 +38,8 @@ this skill ships with the rest of this repository. sibling skills live at the sa
 
 **fresh subagents by default.** new scope gets a new agent with consolidated brief: the original ask, every later directive, and the prior agent's report and branch if any. resume only to continue the same scoped task after a verify failure or an explicit revision of that same brief. do not resume to start unrelated work.
 
+**session and context budget.** Align chats stay short (few user turns, then explicit go). execute in a fresh chat or a `nathan-agent`. **big-changes** plan authoring may run longer in Align but still writes no product code. **orchestrate** always prefers a fresh chat after plan approval. after a land, start a fresh chat for the next unit. do not respawn **how**, **design**, or **write** when proof for that unit already exists in-session. user-alignment and brief-approval todos stay **pending** until explicit go; drafting the brief does not complete them. do not re-inline this skill every message; `nstack-discipline.mdc` keeps sureness and principles on.
+
 ## Writing the reply
 
 Sureness and principles are enforced by the always-applied user rule `nstack-discipline.mdc` (installed by `/setup-nstack`). This section remains normative for playbook replies and is the canonical place for full definitions alongside **Principles** below. Do not rely on long-term full duplication in the rule alone.
