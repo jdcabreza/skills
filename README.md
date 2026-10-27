@@ -45,6 +45,7 @@ sibling skills live at the same level as `nathan-mode/` in this repository.
 | `/open-pr` | push the scoped branch, open a GitLab MR with `glab`, comment `cursor review` for Bugbot. default last step of change playbooks unless you say otherwise. GitLab-only. |
 | `/create-verification-skill` | scaffold `.cursor/skills/verify-<repo>/` plus leaf `verify-*` skills, README Verification bullets, AGENTS.md pointer, and a `maintain-<repo>-verification` stub. for greenfield or thin repos before L2. |
 | `/create-verification-maintainer-skill` | write or refresh `maintain-<repo>-verification` with repo-specific triggers and which leaf to edit when Makefile/routes/CI drift. |
+| `/review` | mine recent local `/nathan-mode` chats for trust/cost/friction patterns; rundown + **Waiting on you:** before handing off to a playbook. does not edit skills itself. |
 
 `authoring a skill` also uses Cursor's built-in `/create-skill`.
 
@@ -66,7 +67,7 @@ default topology is short Align chats, then Execute elsewhere, then L2 review on
 
 **long-thread exceptions:** **big-changes** may take more Align turns while authoring the plan (still no product code). **orchestrate** should start in a **fresh chat** with only the plan path after you approve the plan. escalations are interrupts that need explicit go. do not confirm every box yourself.
 
-**verify:** prefer repo `verify-*` skills when they fit. use throwaway `agent_space/` scripts when skills miss the signal (logs, process boot, etc.). scaffold greenfield verify trees with `/create-verification-skill` and keep them honest with `/create-verification-maintainer-skill`. `/review` (usage mining across past chats) lands as a sibling skill when that PR ships.
+**verify:** prefer repo `verify-*` skills when they fit. use throwaway `agent_space/` scripts when skills miss the signal (logs, process boot, etc.). scaffold greenfield verify trees with `/create-verification-skill` and keep them honest with `/create-verification-maintainer-skill`. use `/review` to mine recent agent usage before proposing skill changes.
 
 **optional usage log:** `docs/usage-log.md` is a one-line-per-land convention (`date | playbook | branch/MR | note`). not required for Ready to land. create the file only when you opt in during a land. it is not a verify artifact.
 
