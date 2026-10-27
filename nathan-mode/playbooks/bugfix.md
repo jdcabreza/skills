@@ -8,6 +8,7 @@ Shared brief: `playbooks/_spec-brief.md`.
 
 ## Phase A — Spec (Align)
 
+0. **Standards ingestion.** Read `AGENTS.md` if present (if absent, note it). Discover repo verification skills. Note `docs/decisions/` when relevant.
 1. Ask for context if missing (who reported, what happened, inputs/outputs). Return a problem brief plus repro plan from `_spec-brief.md`. End with **Waiting on you:** if the user must confirm the problem framing before you spend on repro. Todo items for that alignment stay **pending** until explicit go.
 2. Reproduce the bug. Write a throwaway script if needed (prefer gitignored `agent_space/`). If program state is unclear, add instrumentation and/or logging and read it as the code runs.
 3. Root-cause with evidence. Form hypotheses; rule them out until one survives. Use **how** and **why**. Do not guess. Confirm the root cause with evidence.

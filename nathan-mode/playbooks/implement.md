@@ -6,8 +6,9 @@ Shared brief: `playbooks/_spec-brief.md`.
 
 ## Phase A — Spec (Align)
 
+0. **Standards ingestion.** Read `AGENTS.md` if present (if absent, say so in the brief and fill Architecture and placement by hand). Discover repo verification skills (`.cursor/skills/verify-*` or README Verification). Note `docs/decisions/` when relevant to the ask.
 1. Ask for context if missing (who asked, what must happen, why). Run **how** and **why** over the relevant surface when facts or intent are unclear. If the approach is unclear, run **design**. If the ask is too large for one playbook or blast radius needs a multi-step plan, stop and route to **big-changes**.
-2. Draft the full **spec brief** from `_spec-brief.md` (Outcome through Land; Implications and Architecture and placement required when they apply). Todo items for user alignment / brief approval stay **pending** until explicit go. Do not mark them completed when you only drafted the brief.
+2. Draft the full **spec brief** from `_spec-brief.md` (Outcome through Land; Implications and Architecture and placement required when they apply). Point Architecture / FORBIDDEN at AGENTS.md and verify skills from step 0. Todo items for user alignment / brief approval stay **pending** until explicit go. Do not mark them completed when you only drafted the brief.
 3. Return the brief. End with **Waiting on you:** and stop. Do **not** create a branch, spawn a code delegate, edit product code, or land until explicit go.
 
 ## Phase B — Execute (after go)

@@ -10,6 +10,7 @@ Shared brief: `playbooks/_spec-brief.md`.
 
 ## Phase A — Spec (Align)
 
+0. **Standards ingestion.** Read `AGENTS.md` if present (if absent, note it and fill Architecture and placement by hand). Discover repo verification skills. Note `docs/decisions/` when relevant.
 1. Ask for context if missing (who asked, why, trigger). Run **how** and **why** over the relevant surface. Draft the **spec brief** including Current behavior, judgment whether the refactor is justified, Behavior pin / reader-load intent, Architecture and placement, Approach, Verify checklist, and Land. Be wary of unwarranted refactors.
 2. Pin the behavior. Write or point at a harness (tests, scripts that diff old vs new; prefer gitignored `agent_space/` for throwaways). Type checking and lints are not a pin.
 3. Name the target shape. Catch dead or overly complex branches and invalid states. Plan to remove dead code, collapse thin wrappers, drop redundant validators, remove orphan references. Reduce hidden state and call-stack depth when evidence supports it. Do not speculate. If the target shape is unclear, run **design**. If too large, route to **big-changes**.
