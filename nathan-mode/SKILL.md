@@ -40,6 +40,8 @@ this skill ships with the rest of this repository. sibling skills live at the sa
 
 ## Writing the reply
 
+Sureness and principles are enforced by the always-applied user rule `nstack-discipline.mdc` (installed by `/setup-nstack`). This section remains normative for playbook replies and is the canonical place for full definitions alongside **Principles** below. Do not rely on long-term full duplication in the rule alone.
+
 write the reply clean as you draft it. a cleanup pass after drafting does not remove these patterns.
 
 - **short declarative sentences.** one thought per sentence, ended with a period.

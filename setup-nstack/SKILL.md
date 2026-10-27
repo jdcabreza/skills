@@ -1,17 +1,18 @@
 ---
 name: setup-nstack
 description: >-
-  Configure which models nstack uses per role, and install the nathan-agent
-  subagent for local use. Detects available models, writes an always-applied
-  rule that nathan-mode reads, and copies agents/nathan-agent.md to
-  ~/.cursor/agents/. Use for /setup-nstack, "configure nstack models", or
+  Configure which models nstack uses per role, install the nathan-agent
+  subagent, and install the always-applied nstack-discipline rule. Detects
+  available models, writes nstack-models.mdc, copies agents/nathan-agent.md to
+  ~/.cursor/agents/, and copies templates/nstack-discipline.mdc to
+  ~/.cursor/rules/. Use for /setup-nstack, "configure nstack models", or
   first-time nstack setup.
 disable-model-invocation: true
 ---
 
 # Setup nstack
 
-Write `~/.cursor/rules/nstack-models.mdc`, an always-applied rule that sets nstack's model per role. Install `nathan-agent` for Option 1 local discovery (no marketplace). `/nathan-mode` hard-requires both files before spawning workers or reading role models.
+Write `~/.cursor/rules/nstack-models.mdc`, an always-applied rule that sets nstack's model per role. Install `nathan-agent` for Option 1 local discovery (no marketplace). Install `~/.cursor/rules/nstack-discipline.mdc` (sureness + principles) beside it. `/nathan-mode` hard-requires the models rule and `nathan-agent` before spawning workers or reading role models. Discipline is required for epistemic tags without re-inlining the full skill.
 
 ## Roles
 
@@ -111,6 +112,14 @@ If more than one plugin copy matches, use the copy whose `.cursor-plugin/plugin.
 
 Tell the user to reload the window (Developer: Reload Window) or start a new Agent chat so Task picks up `nathan-agent`.
 
-### 7. Confirm
+### 7. Install nstack-discipline
 
-Tell the user the rule path, the role table that was written, and that `nathan-agent` was installed to `~/.cursor/agents/nathan-agent.md`. Note that the rule applies to new sessions. Re-running this skill updates both the rule and the agent file.
+Copy this repository's `templates/nstack-discipline.mdc` to `~/.cursor/rules/nstack-discipline.mdc` with `alwaysApply: true`. Find the template beside `setup-nstack/` under `templates/nstack-discipline.mdc`, or the same path under `~/.cursor/skills/` / `~/.cursor/plugins/` (highest plugin version wins). Create `~/.cursor/rules/` if needed. Overwrite on re-run so the rule stays idempotent. SKILL remains canonical for full principle definitions; this file is the always-on subset.
+
+### 8. Confirm
+
+Tell the user the models rule path, the role table that was written, that `nathan-agent` was installed to `~/.cursor/agents/nathan-agent.md`, and that `nstack-discipline.mdc` was installed beside the models rule. Note that rules apply to new sessions. Re-running this skill updates models, agent, and discipline files.
+
+### Cost profile (tell the user)
+
+After setup, lean tiers are fine. Prefer fewer judgement spawns and fresh chats over downgrading implement further. Use `inherit-parent` / `auto` for `write-review` only when you still run it (long docs). Routine MRs skip `write-review` per lite `open-pr`. Savings come from volume (delegation, no skill re-inline, lite open-pr), not from skipping verify. Never suggest `fast` or `max`.
