@@ -60,10 +60,10 @@ open a todo list whose first items are the matched playbooks steps, copied in ve
 - **bugfix.** fixing known issues. reproduce a defect, root-cause it, then fix.
 - **implement.** implementing new or changed behaviors.
 - **refactor.** behavior-preserving change. usually to improve maintainability or performance.
-- **big-changes.** catch-all when the ask is too large for one playbook, or a change needs a multi-step plan because of blast radius. produces the plan file, then runs the **orchestrate gate** after approval. not for brainstorming architectures; that is the **design** skill.
+- **big-changes.** catch-all when the ask is too large for one playbook, or a change needs a multi-step plan because of blast radius. produces the plan file (Verification = concrete skills/scripts; Context includes Implications; no product code), then runs the **orchestrate gate** after approval. not for brainstorming architectures; that is the **design** skill.
 - **authoring a skill.** writing or editing a skill. skips `sequence-changes`; lands with `open-pr` when publishing via MR.
 - **document.** writing documentation. skips `sequence-changes`; lands with `open-pr` when publishing via MR.
-- **orchestrate.** babysit an approved plan file (usually from **big-changes**, often in a fresh chat with only the plan path) via a coordinator agent. parent lands each ready PR after review.
+- **orchestrate.** babysit an approved plan file (usually from **big-changes**, often in a fresh chat with only the plan path) via a coordinator agent while the human can step away. workers run VERIFY; coordinator fills plan **Proof** and Ready to land; escalations are interrupts needing explicit go. parent lands each ready PR after review (L2 = MR + Proof, not per-box).
 
 ## Principles
 
