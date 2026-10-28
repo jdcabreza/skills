@@ -1,14 +1,28 @@
 # Implement
 
-**You own the design. Plan, review, and verify.** Delegate implementation, you stay in the lead.
+**You own the design. Plan, review, and verify.** Default after go: delegate implementation to a `nathan-agent`. You stay in the lead. Parent-implement only with explicit **`pair`**.
 
-1. Ask the user for context surrounding the change (who asked, what needs to happen, why it needs to happen). Run the **how** and **why** skills over the relevant code surface. Return to the user your understanding of the ask, resulting behavior, intended impact, and context for user verification.
-2. If the approach is unclear, run **design** to brainstorm architectures, solutions, or implementations. Let the user decide. If the ask is too large for one playbook or the blast radius needs a multi-step plan, stop and route to **big-changes**. Otherwise report what you're going to do high-level, in plain language, and verify user alignment.
-3. Create a scoped branch if not already on `feature/<branch-name>` or `bugfix/<branch-name>`. Prefer `feature/` for new behavior. Never commit on `develop`, `main`, or `master`. Playbooks own the branch and commits. **open-pr** does not create branches.
-4. Delegate code writing to a `nathan-agent` with a specific scope. Model from the nstack-models `implement` role (per the Subagents section and `/setup-nstack`). 
-5. Verify that the feature works as intended. Inconclusive is not a pass. If the new feature does not work as expected, report to the user current progress and what's broken. Continue implementation, loop through steps 4-5 until behavior is correct. If there's an issue with the design itself, report to the user and go back to step 2.
-6. If the repository has decision docs (usually `docs/decisions`), log a decision if necessary for future reference. Report this to the user.
-7. Rebase into ordered, atomic commits. Stack PRs if needed. Use the **sequence-changes** skill.
-8. Run the **open-pr** skill. Default unless the user says otherwise.
+Shared brief: `playbooks/_spec-brief.md`.
 
-**Reply**: the context surrounding the feature, what you built, significant decisions, and open decisions.
+## Phase A — Spec (Align)
+
+1. Ask for context if missing (who asked, what must happen, why). Run **how** and **why** over the relevant surface when facts or intent are unclear. If the approach is unclear, run **design**. If the ask is too large for one playbook or blast radius needs a multi-step plan, stop and route to **big-changes**.
+2. Draft the full **spec brief** from `_spec-brief.md` (Outcome through Land; Implications and Architecture and placement required when they apply). Todo items for user alignment / brief approval stay **pending** until explicit go. Do not mark them completed when you only drafted the brief.
+3. Return the brief. End with **Waiting on you:** and stop. Do **not** create a branch, spawn a code delegate, edit product code, or land until explicit go.
+
+## Phase B — Execute (after go)
+
+4. Create a scoped branch if not already on `feature/<branch-name>` or `bugfix/<branch-name>`. Prefer `feature/` for new behavior. Never commit on `develop`, `main`, or `master`. Playbooks own the branch and commits. **open-pr** does not create branches.
+5. Default: delegate code writing to a `nathan-agent` with the slim worker brief from `_spec-brief.md` (pointers, approved brief path, VERIFY checklist). Model from the nstack-models `implement` role. Do not parent-implement unless the user said **`pair`**.
+
+## Phase C — Proof and land
+
+6. Verify from the brief checklist. Inconclusive is not a pass. Put proof into the worker REPORT (and later MR / plan Proof). Do **not** commit a verification artifact file into the repo. If behavior is wrong, report progress and what broke; loop Phase B–C until correct. If the design itself is wrong, report and return to Phase A.
+7. If the repository has decision docs (usually `docs/decisions`), log a decision when future readers need it. Report that to the user.
+8. Rebase into ordered, atomic commits. Stack PRs if needed. Use **sequence-changes**.
+9. Run **open-pr**. Default unless the user says otherwise.
+
+## Reply
+
+- **Pre-approval:** the full brief. Then stop.
+- **Post-land (L2):** what you built, significant decisions, open decisions, MR + proof pointers.

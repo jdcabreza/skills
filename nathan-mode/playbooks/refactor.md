@@ -1,18 +1,32 @@
 # Refactor
 
-**You own the contract. The structure changes, but the behavior does not**. Distinct from **implement**, which adds/changes behavior, and **bugfix**, which corrects behavior.
+**You own the contract. The structure changes, but the behavior does not.** Distinct from **implement** (adds/changes behavior) and **bugfix** (corrects behavior).
 
-This playbook is for small-to-medium-sized changes. If the ask is too large for one playbook or the blast radius needs a multi-step plan, route to **big-changes**. If you need to brainstorm architectures or approaches first, run **design**.
-If a refactor results in different behavior, name it, and re-route to the **implement** playbook.
-If a refactor reveals a missing feature or a real bug, name it, and ask the user how to proceed.
+Small-to-medium changes only. If the ask is too large for one playbook or blast radius needs a multi-step plan, route to **big-changes**. If you need to brainstorm architectures first, run **design**. If a refactor would change behavior, name it and re-route to **implement**. If it reveals a missing feature or real bug, name it and ask how to proceed.
 
-1. Ask the user for context surrounding the refactor (who asked, why needed, what triggered). Run the **how** and **why** skills over the relevant code surface. Return to the user your understanding of the ask, the current behavior, intended impact, and context for user verification. Also return to the user with your judgement if this refactor is justified and/or necessary. Be wary of unwarranted refactors.
-2. Pin the behavior. Write a harness (unit tests, scripts that diff old vs. new behavior, etc.; if not already existing) to ensure equivalence. Type checking and lints are not pinned.
-3. Name the target shape of the code surface. Catch dead or overly complex branches, invalid states. Remove dead code, collapse thin or one-caller wrappers, drop redundant validators, remove orphan references. Reduce hidden state, call stack depth if possible. Do not speculate. If the target shape is unclear, run **design** to brainstorm approaches. If the change is too large for one playbook or the blast radius needs a multi-step plan, stop and route to **big-changes**. Otherwise report what you're going to do high-level, in plain language, and verify user alignment.
-4. Create a scoped branch if not already on `feature/<branch-name>` or `bugfix/<branch-name>`. Prefer `feature/` for refactors. Never commit on `develop`, `main`, or `master`. Playbooks own the branch and commits. **open-pr** does not create branches.
-5. Move in behavior-preserving steps. For each change, make sure the behavior pin is green. For API reshapes, migrate every caller and delete the old API in the same wave. No compatibility considerations unless user explicitly says so. Spot-check renames against actual files. Delegate code changes to a `nathan-agent` with a specific scope. Model from the nstack-models `refactor` role (per the Subagents section and `/setup-nstack`).
-6. Prove behavior is unchanged on the final artifact using your behavior pin. Confirm that the changes reduced reader load (amount of context humans/agents have to keep in their heads to understand the codebase). Confirm that the changes satisfies the user's intent.
-7. Rebase into ordered, atomic commits. Stack PRs if needed. Use the **sequence-changes** skill.
-8. Run the **open-pr** skill. Default unless the user says otherwise.
+Default after go: delegate code movement to a `nathan-agent`. Parent-implement only with explicit **`pair`**.
 
-**Reply**: the context surrounding the refactor, what behavior to maintain, what changed, the proof that behavior remained the same, and the reader-load delta.
+Shared brief: `playbooks/_spec-brief.md`.
+
+## Phase A — Spec (Align)
+
+1. Ask for context if missing (who asked, why, trigger). Run **how** and **why** over the relevant surface. Draft the **spec brief** including Current behavior, judgment whether the refactor is justified, Behavior pin / reader-load intent, Architecture and placement, Approach, Verify checklist, and Land. Be wary of unwarranted refactors.
+2. Pin the behavior. Write or point at a harness (tests, scripts that diff old vs new; prefer gitignored `agent_space/` for throwaways). Type checking and lints are not a pin.
+3. Name the target shape. Catch dead or overly complex branches and invalid states. Plan to remove dead code, collapse thin wrappers, drop redundant validators, remove orphan references. Reduce hidden state and call-stack depth when evidence supports it. Do not speculate. If the target shape is unclear, run **design**. If too large, route to **big-changes**.
+4. Return the full brief. Todo items for user alignment / brief approval stay **pending** until explicit go. Do not mark them completed when you only drafted the brief. End with **Waiting on you:** and stop. Do **not** create a branch, spawn a code delegate, edit product code, or land until explicit go.
+
+## Phase B — Execute (after go)
+
+5. Create a scoped branch if not already on `feature/<branch-name>` or `bugfix/<branch-name>`. Prefer `feature/` for refactors. Never commit on `develop`, `main`, or `master`. Playbooks own the branch and commits. **open-pr** does not create branches.
+6. Move in behavior-preserving steps. Keep the behavior pin green after each change. For API reshapes, migrate every caller and delete the old API in the same wave. No compatibility layer unless the user explicitly asks. Spot-check renames against real files. Default: delegate to a `nathan-agent` with the slim worker brief from `_spec-brief.md`. Model from the nstack-models `refactor` role. Do not parent-implement unless the user said **`pair`**.
+
+## Phase C — Proof and land
+
+7. Prove behavior is unchanged on the final artifact with the pin. Confirm reader-load dropped (or state why it did not). Confirm the brief Outcome. Put proof into REPORT. Do **not** commit a verification artifact file into the repo.
+8. Rebase into ordered, atomic commits. Stack PRs if needed. Use **sequence-changes**.
+9. Run **open-pr**. Default unless the user says otherwise.
+
+## Reply
+
+- **Pre-approval:** the full brief, including justified-or-not judgment. Then stop.
+- **Post-land (L2):** context, behavior maintained, what changed, pin proof, reader-load delta, MR + proof pointers.
