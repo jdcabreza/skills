@@ -10,6 +10,7 @@ If the **same surface** was traced earlier **in this chat** with citations still
 
 ## Steps
 
+0. **Standards ingestion.** Read `AGENTS.md` if present. Discover repo verification skills when the ask is about how the app is proven. Note `docs/decisions/` when intent or history may live there. Do this before how/why when those sources apply.
 1. Route through the **how** skill when mechanics are unclear. If motivation or intent is asked, also route through the **why** skill. Honor the already-explored shortcut above.
 2. Produce the skill's doc (how: overview, key concepts, how it works, inputs/outputs, triggers and impact; why: overview, history, why it is this way now, impact of changing it).
 3. When the ask is a **decision** between alternatives (or “are we sure / should we”), include **Recommendation**, **Tradeoffs**, and **Assumptions** alongside how/why. Prefer a tradeoffs table when comparing options.
