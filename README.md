@@ -52,6 +52,24 @@ code and orchestrate workers use `subagent_type: "nathan-agent"`. source file is
 
 landing defaults to `sequence-changes` then `/open-pr` after the parent reviews. say otherwise if you want local-only. **document** and **authoring a skill** skip `sequence-changes`. **big-changes** produces a plan file only; after approval it asks same-chat vs fresh-chat before **orchestrate**. **orchestrate** leaves local commits; the parent lands each ready PR.
 
+### session workflow
+
+default topology is short Align chats, then Execute elsewhere, then L2 review on the MR. do **not** re-attach `/nathan-mode` on every follow-up. one attach per chat is enough. `nstack-discipline.mdc` carries sureness and principles on every turn.
+
+| phase | chat | you | agent |
+| --- | --- | --- | --- |
+| **Align** | same chat as the `/nathan-mode` attach | 1–3 turns: brief, clarify, **go** | draft brief or investigate; stop at **Waiting on you:** |
+| **Execute** | fresh chat and/or `nathan-agent` | not steering product code | implement + verify; coordinator for plan boxes |
+| **Review** | GitLab/GitHub async | L2: MR + proof only | proof in plan **Proof** / MR body (not a committed verify file) |
+
+**trust ladder:** L2 is the default (approve spec or plan, later review MR + proof). L0 parent-implement only with explicit `pair`. L3 is multi-PR plans under **orchestrate**. L1 (parent verifies every hunk) is optional training wheels, not the happy path.
+
+**long-thread exceptions:** **big-changes** may take more Align turns while authoring the plan (still no product code). **orchestrate** should start in a **fresh chat** with only the plan path after you approve the plan. escalations are interrupts that need explicit go. do not confirm every box yourself.
+
+**verify:** prefer repo `verify-*` skills when they fit. use throwaway `agent_space/` scripts when skills miss the signal (logs, process boot, etc.). scaffold greenfield verify trees with `/create-verification-skill` and keep them honest with `/create-verification-maintainer-skill`. `/review` (usage mining across past chats) lands as a sibling skill when that PR ships.
+
+**optional usage log:** `docs/usage-log.md` is a one-line-per-land convention (`date | playbook | branch/MR | note`). not required for Ready to land. create the file only when you opt in during a land. it is not a verify artifact.
+
 ### playbooks
 
 all the playbooks that `/nathan-mode` supports:
