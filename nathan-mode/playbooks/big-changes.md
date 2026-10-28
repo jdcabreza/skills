@@ -7,7 +7,7 @@ Use this when the ask is too large for one playbook (many asks, stacked work) or
 1. When the change is 1-2 files with an obvious approach, skip the plan. Say so and re-route to the appropriate playbook.
 2. Ask the user for context surrounding the changes (who asked, why needed, what triggered). Determine a rough ordering of todos/PRs that we can route to the smaller playbooks, broken down from the bigger ask. For each todo, run the **how** and **why** skills over the relevant code surface. Return to the user your understanding of the ask, the current behavior, intended impact, context, and rough list of todos (with justification) for user verification.
 3. Copy the skeleton below into the plan file and fill up. Use `agent_space/` if existing, otherwise use `docs/`. Keep every heading and sub-block in the order shown.
-4. For each rough todo/PR from step 2, dry-run the matching playbook into the plan only. Fill that PR's Context, Changes, Alternatives, Risks, Verification, and Boxes. You may run **how**, **why**, **design**, and **write** (then **unslop**) as those playbooks would for planning. Do not create a branch, spawn a code `nathan-agent`, edit product code, commit, run **sequence-changes**, or run **open-pr**. Those steps belong to a later **orchestrate** or playbook run on an approved box. Work with the human to determine scope, context, and verification. Return the artifact for verification. Move on to the next todo/PR when approved.
+4. For each rough todo/PR from step 2, dry-run the matching playbook into the plan only. Fill that PR's Context (include **Implications**), Changes, Alternatives, Risks, Verification, and Boxes. **Verification** must list concrete commands: repo verify skills and/or gitignored `agent_space/` scripts, plus what pass looks like. Each box’s evidence must map to a checklist item under Verification. You may run **how**, **why**, **design**, and **write** (then **unslop**) as those playbooks would for planning. Do not create a branch, spawn a code `nathan-agent`, edit product code, commit, run **sequence-changes**, or run **open-pr**. Those steps belong to a later **orchestrate** or playbook run on an approved box. Work with the human to determine scope, context, and verification. Return the artifact for verification. Move on to the next todo/PR when approved.
 5. Link the plan file to the user for final review. When they approve the plan, run the **orchestrate gate** below. Do not start **orchestrate** until they answer.
 
 **Orchestrate gate**. After plan approval, ask whether to continue **orchestrate** in this chat or start a fresh chat with only the plan. Prefer a fresh chat when planning burned a lot of context. You cannot open a new chat yourself.
@@ -47,7 +47,9 @@ Tests alone are not sufficient verification. A PR is only verified when unit tes
 
 **Context**
 
-<context surrounding the change. intent, intended behavior, why it's being made. >
+<context surrounding the change. intent, intended behavior, why it's being made.>
+
+**Implications:** <prod, ops, data, compliance, consumers, blast radius.>
 
 **Changes**
 
@@ -63,11 +65,11 @@ Tests alone are not sufficient verification. A PR is only verified when unit tes
 
 **Verification**
 
-<how to verify the changes at the unit test, lint/format, and behavior levels.>
+<concrete commands: verify-* skills and/or agent_space/ scripts; unit/lint/format; behavior pass criteria. each box evidence maps to an item here. proof lands in Proof / MR body, not a committed verify file.>
 
 **Boxes**
 
-- [ ] <checkable step> — evidence: <file, log, screenshot, or test run that proves it>
+- [ ] <checkable step> — evidence: <file, log, screenshot, or test run that proves it; maps to Verification>
 - [ ] <checkable step> `(parallel)` — evidence: <...>
 
 **Ready to land:** no
