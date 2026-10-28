@@ -19,7 +19,9 @@ plus, i don't have a large token budget so i tried to make this cheaper to use. 
 
 ## getting started
 
-before you do anything, run `/setup-nstack` to determine the models to be used across the skills.
+before you do anything, run `/setup-nstack` to determine the models to be used across the skills and to install `nstack-discipline.mdc`. that discipline rule is required so sureness and principles stay on without re-inlining `nathan-mode` every turn. Custom Mode is optional and does not replace it.
+
+**cost profile:** after setup, lean tiers are fine. prefer fewer judgement spawns and fresh chats over downgrading implement further. `inherit-parent` / `auto` for write-review only when you still run it (long docs); routine MRs skip write-review. savings come from delegation, no skill re-inline, and lite open-pr — not from skipping verify. never use `fast` or `max`.
 
 ## usage
 
@@ -32,7 +34,7 @@ sibling skills live at the same level as `nathan-mode/` in this repository.
 | skill | use when |
 | --- | --- |
 | `/nathan-mode` | default entry point. picks a playbook for code changes, investigation, docs, plans, skill edits. call `/design` when you want a parallel approach panel outside a playbook. |
-| `/setup-nstack` | configure models per role; install `nathan-agent` to `~/.cursor/agents/`. |
+| `/setup-nstack` | configure models per role; install `nathan-agent` to `~/.cursor/agents/`; install always-apply `nstack-discipline.mdc` (sureness + principles). |
 | `/how` | figure out how something works. |
 | `/why` | get the motivation and intent behind why something was built that way. |
 | `/unslop` | clean up writing. removes AI tells. |
