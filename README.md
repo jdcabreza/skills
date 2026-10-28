@@ -41,6 +41,8 @@ sibling skills live at the same level as `nathan-mode/` in this repository.
 | `/design` | parallel panel of 2-3 models plus a judge. use when a playbook says so, or when you want approaches without writing code yet. |
 | `/sequence-changes` | organize local work into atomic, verifiable commits or stacked branches. does not push. |
 | `/open-pr` | push the scoped branch, open a GitLab MR with `glab`, comment `cursor review` for Bugbot. default last step of change playbooks unless you say otherwise. GitLab-only. |
+| `/create-verification-skill` | scaffold `.cursor/skills/verify-<repo>/` plus leaf `verify-*` skills, README Verification bullets, AGENTS.md pointer, and a `maintain-<repo>-verification` stub. for greenfield or thin repos before L2. |
+| `/create-verification-maintainer-skill` | write or refresh `maintain-<repo>-verification` with repo-specific triggers and which leaf to edit when Makefile/routes/CI drift. |
 
 `authoring a skill` also uses Cursor's built-in `/create-skill`.
 

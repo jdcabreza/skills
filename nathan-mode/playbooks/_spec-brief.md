@@ -48,7 +48,7 @@ High-level steps only. Not a commit-by-commit script.
 
 ### Verify checklist
 
-Prefer repo verification skills when they fit. Allow listed throwaway scripts (usually under a gitignored `agent_space/`) when skills miss the signal. Each item: command or skill path, and what pass looks like. Proof goes into the worker REPORT and later into plan **Proof** / MR body. Never commit a verification artifact into the product or skills tree as part of verify.
+Prefer repo verification skills when they fit (overarching `verify-<repo>/` and leaf `verify-*`; scaffold with `/create-verification-skill`, keep honest with `/create-verification-maintainer-skill`). Allow listed throwaway scripts (usually under a gitignored `agent_space/`) when skills miss the signal. Skills that only hit an endpoint and exit are not the whole story when the signal is a log line or process behavior. Each item: command or skill path, and what pass looks like. Proof goes into the worker REPORT and later into plan **Proof** / MR body. Never commit a verification artifact into the product or skills tree as part of verify.
 
 ### Land
 
