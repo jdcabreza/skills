@@ -13,24 +13,34 @@ this skill ships with the rest of this repository. sibling skills live at the sa
 
 ## Subagents
 
-**setup is non-negotiable.** before any `/nathan-mode` work that spawns a `nathan-agent` or reads role models, require both `~/.cursor/agents/nathan-agent.md` and `~/.cursor/rules/nstack-models.mdc`. if either is missing, stop and tell the user to run `/setup-nstack`. do not substitute `generalPurpose` for `nathan-agent`. do not invent model slugs.
+**harness terms.** these skills run in Cursor and Claude Code. both load skills from `~/.claude/skills/` and subagents from `~/.claude/agents/`. read each term for the harness you are in.
+
+| term | Cursor | Claude Code |
+| --- | --- | --- |
+| spawn a subagent | `Task` tool | `Agent` tool |
+| explore agent | `explore` | `Explore` |
+| general-purpose agent | `generalPurpose` | `general-purpose` |
+| models file | `~/.claude/nstack-models-cursor.md` | `~/.claude/nstack-models-claude.md` |
+| structured question | `AskQuestion` | `AskUserQuestion` |
+
+**setup is non-negotiable.** before any `/nathan-mode` work that spawns a `nathan-agent` or reads role models, require `~/.claude/agents/nathan-agent.md` and this harness's models file. if either is missing, stop and tell the user to run `/setup-nstack`. do not substitute a general-purpose agent for `nathan-agent`. do not invent model slugs.
 
 **code and orchestrate coordinator delegates use `subagent_type: "nathan-agent"`.** the chat that receives `/nathan-mode` runs the playbook. never spawn a `nathan-agent` to run the playbook itself. the **orchestrate** playbook may spawn one coordinator `nathan-agent` to babysit a plan; that coordinator is a delegate, not the playbook runner.
 
-**routed workflow skills set their own Task shape.** respect what the skill prescribes. do not override those spawns to `nathan-agent`.
+**routed workflow skills set their own spawn shape.** respect what the skill prescribes. do not override those spawns to `nathan-agent`.
 
-| skill | Task shape |
+| skill | spawn shape |
 | --- | --- |
-| `how`, `why` | one `explore` agent. model from the skill's role line. |
-| `design` | `design-count` parallel `generalPurpose` agents (2 or 3 from setup). models from `design-1` .. `design-N`. then one `generalPurpose` judge (`design-judge`). parent unslops and replies. |
-| `write` | one `generalPurpose` writer (`write`), then one `generalPurpose` reviewer (`write-review`) through the audience lens. |
-| `unslop` | parent only, in-process. no Task spawn. no setup model role. quick reword pass on the parent chat model. never delegate. |
-| `huh` | parent only, in-process. no Task spawn. no setup model role. rewrite the prior reply for a tired engineer. applies unslop, then reshapes. never delegate. |
-| `sequence-changes`, `open-pr` | parent only, in-process. no Task spawn. no setup model role. run on the parent chat model. these are how work lands. never delegate landing. |
+| `how`, `why` | one explore agent. model from the skill's role line. |
+| `design` | `design-count` parallel general-purpose agents (2 or 3 from setup). models from `design-1` .. `design-N`. then one general-purpose judge (`design-judge`). parent unslops and replies. |
+| `write` | one general-purpose writer (`write`), then one general-purpose reviewer (`write-review`) through the audience lens. |
+| `unslop` | parent only, in-process. no subagent spawn. no setup model role. quick reword pass on the parent chat model. never delegate. |
+| `huh` | parent only, in-process. no subagent spawn. no setup model role. rewrite the prior reply for a tired engineer. applies unslop, then reshapes. never delegate. |
+| `sequence-changes`, `open-pr` | parent only, in-process. no subagent spawn. no setup model role. run on the parent chat model. these are how work lands. never delegate landing. |
 
-**defaults for every `Task` call.** `run_in_background: true`, file pointers not inlined context, model from the nstack-models rule per role (via `/setup-nstack`). when the role value is `inherit-parent` or `auto`, omit Task `model` so the child runs on the parent chat model. otherwise pass the role's slug explicitly. code delegates use the playbook role (`implement`, `refactor`, `bugfix`) and raise or lower via step lines when difficulty warrants. coordinator babysitting reads `orchestrate`. if there is no rule from `/setup-nstack`, stop and tell the user to run it. do not assume reasoning budget.
+**defaults for every subagent spawn.** `run_in_background: true`, file pointers not inlined context, model from the models file per role (via `/setup-nstack`). when the role value is `inherit-parent` or `auto`, omit `model` so the child runs on the parent chat model. otherwise pass the role's slug explicitly. code delegates use the playbook role (`implement`, `refactor`, `bugfix`) and raise or lower via step lines when difficulty warrants. coordinator babysitting reads `orchestrate`. if there is no models file, stop and tell the user to run it. do not assume reasoning budget.
 
-**match the model to the job.** start from the role's base slug in the nstack-models rule. setup writes optional full-slug steps beside it: `role+1`, `role+2`, `role-1`, `role-2`. raise one step means use `role+1` when present (hardest or subtlest work may use `role+2` if present). lower one step means `role-1`; routine work may use `role-2`. if a step line is missing, keep the base slug. never pick a `fast` or `max` slug. never invent a slug that is not in the rule or the detected set.
+**match the model to the job.** start from the role's base slug in the models file. setup writes optional full-slug steps beside it: `role+1`, `role+2`, `role-1`, `role-2`. raise one step means use `role+1` when present (hardest or subtlest work may use `role+2` if present). lower one step means `role-1`; routine work may use `role-2`. if a step line is missing, keep the base slug. never pick a `fast` or `max` slug. never invent a slug that is not in the models file or the detected set.
 
 **drain before you depend.** background is the default so the parent can keep moving or end the turn while workers run. do not mark a step done, and do not start a dependent step, until you have read and judged each required worker's report. when waiting on background work with nothing else useful to do, end the turn.
 
@@ -38,11 +48,11 @@ this skill ships with the rest of this repository. sibling skills live at the sa
 
 **fresh subagents by default.** new scope gets a new agent with consolidated brief: the original ask, every later directive, and the prior agent's report and branch if any. resume only to continue the same scoped task after a verify failure or an explicit revision of that same brief. do not resume to start unrelated work.
 
-**session and context budget.** Align chats stay short (few user turns, then explicit go). execute in a fresh chat or a `nathan-agent`. **big-changes** plan authoring may run longer in Align but still writes no product code. **orchestrate** always prefers a fresh chat after plan approval. after a land, start a fresh chat for the next unit. do not respawn **how**, **design**, or **write** when proof for that unit already exists in-session. user-alignment and brief-approval todos stay **pending** until explicit go; drafting the brief does not complete them. do not re-inline this skill every message; `nstack-discipline.mdc` keeps sureness and principles on. usage-review asks (“review my last week of nathan-mode”) belong to the sibling `/review` skill, not a playbook inside nathan-mode.
+**session and context budget.** Align chats stay short (few user turns, then explicit go). execute in a fresh chat or a `nathan-agent`. **big-changes** plan authoring may run longer in Align but still writes no product code. **orchestrate** always prefers a fresh chat after plan approval. after a land, start a fresh chat for the next unit. do not respawn **how**, **design**, or **write** when proof for that unit already exists in-session. user-alignment and brief-approval todos stay **pending** until explicit go; drafting the brief does not complete them. do not re-inline this skill every message; the nstack-discipline rule keeps sureness and principles on. usage-review asks (“review my last week of nathan-mode”) belong to the sibling `/review` skill, not a playbook inside nathan-mode.
 
 ## Writing the reply
 
-Sureness and principles are enforced by the always-applied user rule `nstack-discipline.mdc` (installed by `/setup-nstack`). This section remains normative for playbook replies and is the canonical place for full definitions alongside **Principles** below. Do not rely on long-term full duplication in the rule alone.
+Sureness and principles are enforced by the always-on nstack-discipline rule (installed by `/setup-nstack`). This section remains normative for playbook replies and is the canonical place for full definitions alongside **Principles** below. Do not rely on long-term full duplication in the rule alone.
 
 write the reply clean as you draft it. a cleanup pass after drafting does not remove these patterns.
 

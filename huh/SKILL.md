@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 # Huh
 
-Parent-only. In-process. No Task spawn. No setup model role. Runs on the parent chat model. Never delegate.
+Parent-only. In-process. No subagent spawn. No setup model role. Runs on the parent chat model. Never delegate.
 
 Rewrite the last assistant reply (or the span the user pointed at) so a tired engineer gets it on one read. Keep the facts. Change the words and the shape.
 

@@ -9,7 +9,7 @@ disable-model-invocation: true
 
 # Unslop
 
-Parent-only. In-process. No Task spawn. No setup model role. Runs on the parent chat model. Never delegate.
+Parent-only. In-process. No subagent spawn. No setup model role. Runs on the parent chat model. Never delegate.
 
 Apply to the current output (the draft or reply you are about to send, or the text the user pointed at). Keep the overall structure.
 

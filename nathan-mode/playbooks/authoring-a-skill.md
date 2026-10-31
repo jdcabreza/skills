@@ -2,7 +2,7 @@
 
 **You own the skill's voice.**
 
-1. Use the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
+1. Use the harness's skill authoring skill: **create-skill** in Cursor, **skill-creator** in Claude Code.
 2. Validate the skill: frontmatter has `name` and `description`, referenced files exist, cross-skill links resolve.
 3. Test cases if structural. Skip if subjective.
 4. Create a scoped branch if not already on `feature/<branch-name>` or `bugfix/<branch-name>` (prefer `feature/`). Commit on that branch. Never commit on `develop`, `main`, or `master`. Skip **sequence-changes** unless the user asks. Run **open-pr** unless the user says otherwise.

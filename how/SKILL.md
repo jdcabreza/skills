@@ -9,12 +9,12 @@ disable-model-invocation: true
 
 # How
 
-Figure out how something works. Read-only. One `explore` Task, model from the `how` line in `~/.cursor/rules/nstack-models.mdc`. If that rule is missing, stop and tell the user to run `/setup-nstack`. Do not override the spawn to `nathan-agent`. Parent owns intent, synthesis, and the reply. Never pass the explore report through verbatim.
+Figure out how something works. Read-only. One explore subagent, model from the `how` line in the models file (path in the **harness terms** table in `../nathan-mode/SKILL.md`). If that file is missing, stop and tell the user to run `/setup-nstack`. Do not override the spawn to `nathan-agent`. Parent owns intent, synthesis, and the reply. Never pass the explore report through verbatim.
 
 ## Steps
 
 1. Determine the user's intent. What do they really want to know about the system? Name the surface and the question in one or two sentences before spawning.
-2. **Already-explored shortcut:** if the same surface was traced earlier in this chat with citations still in context, and no material file change for that surface has landed since that trace, do **not** respawn `explore`. Synthesize from the prior report and skip to step 3. Otherwise spawn one `explore` agent (`run_in_background: true`, model from the `how` role; omit `model` when the role is `inherit-parent` or `auto`). Brief it with the intent and this checklist. Default thoroughness `medium`; use `very thorough` for wide or unfamiliar surfaces.
+2. **Already-explored shortcut:** if the same surface was traced earlier in this chat with citations still in context, and no material file change for that surface has landed since that trace, do **not** respawn the explore agent. Synthesize from the prior report and skip to step 3. Otherwise spawn one explore agent (`run_in_background: true`, model from the `how` role; omit `model` when the role is `inherit-parent` or `auto`). Brief it with the intent and this checklist. Default thoroughness `medium`; use `very thorough` for wide or unfamiliar surfaces.
    - **Code.** Trace control flow from the relevant entrypoint until the surface is hit. Note the immediate vicinity. How was it triggered. Inputs, outputs, algorithms, transformations. Trace downstream impact.
    - **Infra.** Read Terraform (or the repo's infra layout) for the surface. Note providers, modules, and what the surface provisions or depends on.
    - **Docs.** If Confluence or similar MCP tools are available, search for existing diagrams, API docs, or runbooks for this surface. Skip quietly when no such MCP is present.

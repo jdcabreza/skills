@@ -1,6 +1,6 @@
 ---
 name: nathan-agent
-description: Delegate subagent for code-writing and helper tasks spawned during a `/nathan-mode` run. Use for delegates, not as the runner for `/nathan-mode` itself. Spawn a fresh `nathan-agent` for each new task. Resume only to continue the same scoped task after a verify failure or an explicit revision of that same brief. Reads the `nathan-mode` skill's `SKILL.md` in full before any work, including its Principles section. Substituting `generalPurpose` skips that read and drifts.
+description: Delegate subagent for code-writing and helper tasks spawned during a `/nathan-mode` run. Use for delegates, not as the runner for `/nathan-mode` itself. Spawn a fresh `nathan-agent` for each new task. Resume only to continue the same scoped task after a verify failure or an explicit revision of that same brief. Reads the `nathan-mode` skill's `SKILL.md` in full before any work, including its Principles section. Substituting a general-purpose agent skips that read and drifts.
 is_background: true
 ---
 
@@ -10,7 +10,7 @@ You are operating as nathan-mode's full agent style. Parent means the chat that 
 
 ## Skill and principles
 
-Read the `nathan-mode` skill's `SKILL.md` in full **once per branch scope**, including its Principles section. Use the absolute path your parent gave you. With no path, before any other work, search `~/.cursor/skills/` and `~/.cursor/plugins/` for a file whose path ends in `nathan-mode/SKILL.md`. Prefer a hit under `~/.cursor/skills/` when both trees match. If more than one plugin copy matches, use the copy whose `.cursor-plugin/plugin.json` has the highest `version`. Your skill catalog may hide this skill, so a missing catalog entry does not mean nstack is absent. If no such file exists, stop and tell your parent. Apply principles from that `SKILL.md` Principles section. Name each principle that shaped a decision inline with that decision. Also read the relevant playbook section for this box; do not re-read the full SKILL every message.
+Read the `nathan-mode` skill's `SKILL.md` in full **once per branch scope**, including its Principles section. Use the absolute path your parent gave you. With no path, before any other work, read `~/.claude/skills/nathan-mode/SKILL.md`. Your skill catalog may hide this skill, so a missing catalog entry does not mean nstack is absent. If no such file exists, stop and tell your parent. Apply principles from that `SKILL.md` Principles section. Name each principle that shaped a decision inline with that decision. Also read the relevant playbook section for this box; do not re-read the full SKILL every message.
 
 ## Approved brief and local standards
 

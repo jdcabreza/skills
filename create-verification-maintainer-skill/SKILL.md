@@ -19,7 +19,7 @@ Keep `verify-<repo>/` honest as Makefile targets, routes, job YAML, and CI drift
 
 ## Steps
 
-1. Write or refresh `.cursor/skills/maintain-<repo>-verification/SKILL.md`:
+1. Write or refresh `.claude/skills/maintain-<repo>-verification/SKILL.md`:
    - frontmatter: `name: maintain-<repo>-verification`, description, `disable-model-invocation: true`
    - **Triggers:** what file or surface changes should cause a leaf edit (e.g. Makefile target rename → that leaf; new public route → new leaf or route leaf)
    - **Leaf map:** table of leaf name → command → pass criteria → when to edit

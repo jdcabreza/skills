@@ -18,7 +18,7 @@ Shared brief: `playbooks/_spec-brief.md`.
 ## Phase B — Execute (after go)
 
 6. Create a scoped branch if not already on `feature/<branch-name>` or `bugfix/<branch-name>`. Prefer `bugfix/` for defect fixes. Never commit on `develop`, `main`, or `master`. Playbooks own the branch and commits. **open-pr** does not create branches.
-7. Default: delegate the fix to a `nathan-agent` with the slim worker brief from `_spec-brief.md`. Model from the nstack-models `bugfix` role. Do not parent-implement unless the user said **`pair`**.
+7. Default: delegate the fix to a `nathan-agent` with the slim worker brief from `_spec-brief.md`. Model from the `bugfix` role in the models file. Do not parent-implement unless the user said **`pair`**.
 
 ## Phase C — Proof and land
 

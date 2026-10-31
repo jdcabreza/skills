@@ -19,7 +19,11 @@ plus, i don't have a large token budget so i tried to make this cheaper to use. 
 
 ## getting started
 
-before you do anything, run `/setup-nstack` to determine the models to be used across the skills and to install `nstack-discipline.mdc`. that discipline rule is required so sureness and principles stay on without re-inlining `nathan-mode` every turn. Custom Mode is optional and does not replace it.
+works in Cursor and Claude Code. no plugin or marketplace needed.
+
+1. clone this repo anywhere except inside `~/.cursor/skills` or `~/.claude/skills`. Cursor would load each skill twice.
+2. run `./install.sh`. it symlinks each skill into `~/.claude/skills` and `agents/nathan-agent.md` into `~/.claude/agents`. Cursor reads both for Claude compatibility. it also copies the always-on `nstack-discipline` rule to `~/.claude/rules/` and `~/.cursor/rules/`. that rule keeps sureness and principles on without re-inlining `nathan-mode` every turn. `git pull` updates skills; rerun `./install.sh` to refresh the rule.
+3. restart the harness, then run `/setup-nstack` to pick models per role. run it once in each harness you use, since model slugs differ. Cursor writes `~/.claude/nstack-models-cursor.md`. Claude Code writes `~/.claude/nstack-models-claude.md`.
 
 **cost profile:** after setup, lean tiers are fine. prefer fewer judgement spawns and fresh chats over downgrading implement further. `inherit-parent` / `auto` for write-review only when you still run it (long docs); routine MRs skip write-review. savings come from delegation, no skill re-inline, and lite open-pr — not from skipping verify. never use `fast` or `max`.
 
@@ -34,7 +38,7 @@ sibling skills live at the same level as `nathan-mode/` in this repository.
 | skill | use when |
 | --- | --- |
 | `/nathan-mode` | default entry point. picks a playbook for code changes, investigation, docs, plans, skill edits. call `/design` when you want a parallel approach panel outside a playbook. |
-| `/setup-nstack` | configure models per role; install `nathan-agent` to `~/.cursor/agents/`; install always-apply `nstack-discipline.mdc` (sureness + principles). |
+| `/setup-nstack` | run `install.sh` and configure models per role. |
 | `/how` | figure out how something works. |
 | `/why` | get the motivation and intent behind why something was built that way. |
 | `/unslop` | clean up writing. removes AI tells. |
@@ -43,19 +47,19 @@ sibling skills live at the same level as `nathan-mode/` in this repository.
 | `/design` | parallel panel of 2-3 models plus a judge. use when a playbook says so, or when you want approaches without writing code yet. |
 | `/sequence-changes` | organize local work into atomic, verifiable commits or stacked branches. does not push. |
 | `/open-pr` | push the scoped branch, open a GitLab MR with `glab`, comment `cursor review` for Bugbot. default last step of change playbooks unless you say otherwise. GitLab-only. |
-| `/create-verification-skill` | scaffold `.cursor/skills/verify-<repo>/` plus leaf `verify-*` skills, README Verification bullets, AGENTS.md pointer, and a `maintain-<repo>-verification` stub. for greenfield or thin repos before L2. |
+| `/create-verification-skill` | scaffold `.claude/skills/verify-<repo>/` plus leaf `verify-*` skills, README Verification bullets, AGENTS.md pointer, and a `maintain-<repo>-verification` stub. for greenfield or thin repos before L2. |
 | `/create-verification-maintainer-skill` | write or refresh `maintain-<repo>-verification` with repo-specific triggers and which leaf to edit when Makefile/routes/CI drift. |
 | `/review` | mine recent local `/nathan-mode` chats for trust/cost/friction patterns; rundown + **Waiting on you:** before handing off to a playbook. does not edit skills itself. |
 
-`authoring a skill` also uses Cursor's built-in `/create-skill`.
+`authoring a skill` also uses the harness's skill authoring skill: `/create-skill` in Cursor, `skill-creator` in Claude Code.
 
-code and orchestrate workers use `subagent_type: "nathan-agent"`. source file is `agents/nathan-agent.md`. `/setup-nstack` copies it to `~/.cursor/agents/nathan-agent.md` so Task can discover it without the marketplace. routed skills (`how`, `why`, `design`, `write`) keep their own Task shapes in `nathan-mode/SKILL.md`. parent-only skills (`unslop`, `huh`, `sequence-changes`, `open-pr`) never spawn Tasks. model choices live in `~/.cursor/rules/nstack-models.mdc` after setup.
+code and orchestrate workers use `subagent_type: "nathan-agent"`. source file is `agents/nathan-agent.md`. routed skills (`how`, `why`, `design`, `write`) keep their own spawn shapes in `nathan-mode/SKILL.md`. parent-only skills (`unslop`, `huh`, `sequence-changes`, `open-pr`) never spawn subagents. per-harness tool names and file paths live in the **harness terms** table in `nathan-mode/SKILL.md`.
 
 landing defaults to `sequence-changes` then `/open-pr` after the parent reviews. say otherwise if you want local-only. **document** and **authoring a skill** skip `sequence-changes`. **big-changes** produces a plan file only; after approval it asks same-chat vs fresh-chat before **orchestrate**. **orchestrate** leaves local commits; the parent lands each ready PR.
 
 ### session workflow
 
-default topology is short Align chats, then Execute elsewhere, then L2 review on the MR. do **not** re-attach `/nathan-mode` on every follow-up. one attach per chat is enough. `nstack-discipline.mdc` carries sureness and principles on every turn.
+default topology is short Align chats, then Execute elsewhere, then L2 review on the MR. do **not** re-attach `/nathan-mode` on every follow-up. one attach per chat is enough. the `nstack-discipline` rule carries sureness and principles on every turn.
 
 | phase | chat | you | agent |
 | --- | --- | --- | --- |

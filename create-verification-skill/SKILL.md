@@ -1,7 +1,7 @@
 ---
 name: create-verification-skill
 description: >-
-  Scaffold repo verification skills under .cursor/skills/verify-<repo>/ with
+  Scaffold repo verification skills under .claude/skills/verify-<repo>/ with
   leaf verify-* commands, README Verification bullets, AGENTS.md pointer, and a
   maintain-<repo>-verification stub. Use when a greenfield or thin repo needs
   an app-works verify path before L2 delegation.
@@ -15,7 +15,7 @@ Scaffold an **app-works** verification tree for the current repo. This does not 
 ## Before you start
 
 1. Confirm the **repo short name** (slug for paths), e.g. `address-parser` → `verify-address-parser`.
-2. Confirm target root: usually the app repo’s `.cursor/skills/` (project skills), not `~/.cursor/skills/`.
+2. Confirm target root: usually the app repo’s `.claude/skills/` (project skills), not `~/.claude/skills/`.
 3. If `AGENTS.md` is missing, note that in the brief/README risk; still scaffold verify skills. Taste still needs AGENTS.md separately.
 
 Do **not** copy proprietary trees from other companies into this skills repo. When useful, name public or known-good patterns in prose only (e.g. address-parser-style leaf = one Makefile target; kyc-pipeline-style = one HTTP or job dry-run per leaf).
@@ -23,7 +23,7 @@ Do **not** copy proprietary trees from other companies into this skills repo. Wh
 ## Layout to create
 
 ```
-.cursor/skills/
+.claude/skills/
   verify-<repo>/
     SKILL.md                 # overarching: when to run which leaf
     verify-<check-a>/

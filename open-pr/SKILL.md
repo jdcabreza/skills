@@ -10,14 +10,14 @@ disable-model-invocation: true
 
 # Open PR
 
-Parent-only. In-process. No Task spawn. Runs on the parent chat model.
+Parent-only. In-process. No subagent spawn. Runs on the parent chat model.
 
 Playbooks own the branch and the commits. This skill only opens the MR.
 
 ## Steps
 
 1. Confirm the current branch is `feature/<branch-name>` or `bugfix/<branch-name>`. If it is not, stop. Do not create a branch here. Do not open from `develop`, `main`, or `master`.
-2. Read the repository's MR template if it exists (GitLab: `.gitlab/merge_request_templates/`, or a root `MERGE_REQUEST_TEMPLATE.md`). Compose the description from the template plus proof the playbook already produced (plan **Proof**, worker REPORT, or equivalent). Default: **skip** the **write** skill’s audience `write-review` Task. You may use **write**’s writer alone, or draft on the parent model, then run **unslop**. The body must still read well for a human reviewer (clear summary, test/proof section, no invented evidence). No need for user review of the draft.
+2. Read the repository's MR template if it exists (GitLab: `.gitlab/merge_request_templates/`, or a root `MERGE_REQUEST_TEMPLATE.md`). Compose the description from the template plus proof the playbook already produced (plan **Proof**, worker REPORT, or equivalent). Default: **skip** the **write** skill’s audience `write-review` subagent. You may use **write**’s writer alone, or draft on the parent model, then run **unslop**. The body must still read well for a human reviewer (clear summary, test/proof section, no invented evidence). No need for user review of the draft.
 3. Push the branch to remote (usually `origin`). Create the MR with the GitLab CLI (`glab`). Set the description from the artifact in step 2. Prefer `glab` for every GitLab host. Only fall back to another tool if `glab` cannot talk to that remote.
 4. Post a top-level MR comment with `glab` that is exactly `cursor review` so Cursor Bugbot runs. Not a thread reply.
 5. Return the MR link to the user.
