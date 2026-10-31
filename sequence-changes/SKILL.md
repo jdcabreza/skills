@@ -5,7 +5,6 @@ description: >-
   PRs. Use for /sequence-changes, nathan-mode landing after verify, or when a
   playbook says to rebase into ordered atomic commits. Does not push or open
   MRs. Parent-only, never delegated.
-disable-model-invocation: true
 ---
 
 # Sequence Changes

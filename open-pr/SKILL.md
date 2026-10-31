@@ -5,7 +5,6 @@ description: >-
   bugfix/ branch. Fills the MR template from proof, pushes, creates the MR,
   comments cursor review for Bugbot. Use for /open-pr, nathan-mode landing,
   or when a playbook says to run open-pr. Does not create branches or commits.
-disable-model-invocation: true
 ---
 
 # Open PR
