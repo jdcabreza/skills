@@ -19,7 +19,7 @@ Shared brief: `playbooks/_spec-brief.md`.
 ## Phase B — Execute (after go)
 
 5. Create a scoped branch if not already on `feature/<branch-name>` or `bugfix/<branch-name>`. Prefer `feature/` for refactors. Never commit on `develop`, `main`, or `master`. Playbooks own the branch and commits. **open-pr** does not create branches.
-6. Move in behavior-preserving steps. Keep the behavior pin green after each change. For API reshapes, migrate every caller and delete the old API in the same wave. No compatibility layer unless the user explicitly asks. Spot-check renames against real files. Default: delegate to a `nathan-agent` with the slim worker brief from `_spec-brief.md`. Model from the nstack-models `refactor` role. Do not parent-implement unless the user said **`pair`**.
+6. Move in behavior-preserving steps. Keep the behavior pin green after each change. For API reshapes, migrate every caller and delete the old API in the same wave. No compatibility layer unless the user explicitly asks. Spot-check renames against real files. Default: delegate to a `nathan-agent` with the slim worker brief from `_spec-brief.md`. Model from the `refactor` role in the models file. Do not parent-implement unless the user said **`pair`**.
 
 ## Phase C — Proof and land
 

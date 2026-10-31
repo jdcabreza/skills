@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 # Sequence Changes
 
-Parent-only. In-process. No Task spawn. No setup model role. Runs on the parent chat model. Never delegate.
+Parent-only. In-process. No subagent spawn. No setup model role. Runs on the parent chat model. Never delegate.
 
 Playbooks own the branch. This skill rewrites local history into reviewable units. **open-pr** pushes and opens the MR afterward.
 

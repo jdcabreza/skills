@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 # Review (usage mining)
 
-Parent-only for the mining and synthesis loop (like `unslop` / `open-pr`). You may spawn one `explore` only to map the skill tree. Do **not** spawn a code `nathan-agent`. Do **not** edit skills or open MRs inside this skill.
+Parent-only for the mining and synthesis loop (like `unslop` / `open-pr`). You may spawn one explore agent only to map the skill tree. Do **not** spawn a code `nathan-agent`. Do **not** edit skills or open MRs inside this skill.
 
 ## Steps
 

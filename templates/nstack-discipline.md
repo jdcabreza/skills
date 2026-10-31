@@ -43,7 +43,7 @@ When a choice reflects this thinking, tag inline: `[**<principle>**] <decision>`
 
 ## Workflow pointer
 
-When the user invokes `/nathan-mode`, read `~/.cursor/skills/nathan-mode/SKILL.md` (or the repo copy) **once** that chat for playbooks and landing. Do not re-inline the full skill every message.
+When the user invokes `/nathan-mode`, read `~/.claude/skills/nathan-mode/SKILL.md` **once** that chat for playbooks and landing. Do not re-inline the full skill every message.
 
 ## Out of scope
 
