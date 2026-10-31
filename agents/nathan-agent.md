@@ -2,6 +2,7 @@
 name: nathan-agent
 description: Delegate subagent for code-writing and helper tasks spawned during a `/nathan-mode` run. Use for delegates, not as the runner for `/nathan-mode` itself. Spawn a fresh `nathan-agent` for each new task. Resume only to continue the same scoped task after a verify failure or an explicit revision of that same brief. Reads the `nathan-mode` skill's `SKILL.md` in full before any work, including its Principles section. Substituting a general-purpose agent skips that read and drifts.
 is_background: true
+background: true
 ---
 
 # Nathan subagent

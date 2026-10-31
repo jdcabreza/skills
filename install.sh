@@ -5,7 +5,7 @@ repo="$(cd "$(dirname "$0")" && pwd)"
 home=~/.claude
 
 case "$repo" in
-  "$HOME"/.cursor/skills*|"$HOME"/.claude/skills*) echo "warn: $repo is a skills directory. move the clone elsewhere or Cursor loads each skill twice." ;;
+  "$HOME"/.cursor/skills*) echo "warn: $repo is under ~/.cursor/skills. move the clone elsewhere or Cursor loads each skill twice." ;;
 esac
 
 link() { # link <source> <target>
