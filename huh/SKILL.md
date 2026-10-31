@@ -5,7 +5,6 @@ description: >-
   follow. Use for /huh, when the user did not understand a reply, or asks
   to explain what was just said in simpler terms. Parent-only, never
   delegated.
-disable-model-invocation: true
 ---
 
 # Huh

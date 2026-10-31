@@ -4,7 +4,6 @@ description: >-
   Brainstorm architectures, solutions, or implementations with a parallel
   panel of 2-3 designer models, then a judge synthesis. Use for /design, or
   when a playbook says to run design before the user decides an approach.
-disable-model-invocation: true
 ---
 
 # Design

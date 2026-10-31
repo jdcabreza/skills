@@ -4,7 +4,6 @@ description: >-
   Recover the motivation and history behind a design or implementation
   decision and write a comprehensive explanation. Use for /why, investigate
   when intent is asked, or when a playbook says to run why over a surface.
-disable-model-invocation: true
 ---
 
 # Why

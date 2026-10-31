@@ -4,7 +4,6 @@ description: >-
   Trace how a system surface works and write a comprehensive explanation.
   Use for /how, investigate playbook routing, or when a playbook says to run
   how over a code or infra surface.
-disable-model-invocation: true
 ---
 
 # How

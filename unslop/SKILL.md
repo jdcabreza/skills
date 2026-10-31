@@ -4,7 +4,6 @@ description: >-
   Clean up writing by removing AI tells and rewording into plain human
   language. Use for /unslop, after write drafts, investigate replies, or when
   nathan-mode or a playbook says to run unslop. Parent-only, never delegated.
-disable-model-invocation: true
 ---
 
 # Unslop

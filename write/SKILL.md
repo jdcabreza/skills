@@ -4,7 +4,6 @@ description: >-
   Technical writing with outline alignment, a writer pass, audience review,
   and a verify loop. Use for /write, docs, RFCs, READMEs, PR descriptions,
   commit messages, or when a playbook says to run write in full.
-disable-model-invocation: true
 ---
 
 # Write

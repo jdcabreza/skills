@@ -21,7 +21,7 @@ plus, i don't have a large token budget so i tried to make this cheaper to use. 
 
 works in Cursor and Claude Code. no plugin or marketplace needed.
 
-1. clone this repo anywhere except inside `~/.cursor/skills` or `~/.claude/skills`. Cursor would load each skill twice.
+1. clone this repo anywhere except inside `~/.cursor/skills`. Cursor would load each skill twice. cloning straight into `~/.claude/skills` works; Claude Code also writes its synced org skills to `synced/` there, which `.gitignore` covers.
 2. run `./install.sh`. it symlinks each skill into `~/.claude/skills` and `agents/nathan-agent.md` into `~/.claude/agents`. Cursor reads both for Claude compatibility. it also copies the always-on `nstack-discipline` rule to `~/.claude/rules/` and `~/.cursor/rules/`. that rule keeps sureness and principles on without re-inlining `nathan-mode` every turn. `git pull` updates skills; rerun `./install.sh` to refresh the rule.
 3. restart the harness, then run `/setup-nstack` to pick models per role. run it once in each harness you use, since model slugs differ. Cursor writes `~/.claude/nstack-models-cursor.md`. Claude Code writes `~/.claude/nstack-models-claude.md`.
 
